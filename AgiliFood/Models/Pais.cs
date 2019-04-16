@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace AgiliFood.Models
 {
@@ -23,6 +24,8 @@ namespace AgiliFood.Models
         [Required]
         [Column("timestamp")]
         public DateTime TimesTamp { get; set; }
+
+        public ICollection<Estado> Estados { get; set; }
 
     }
 }

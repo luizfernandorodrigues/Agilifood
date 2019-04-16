@@ -136,8 +136,20 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Cardapio.cs" />
+    <Compile Include="Models\Cep.cs" />
+    <Compile Include="Models\Cidade.cs" />
+    <Compile Include="Models\ContasReceber.cs" />
     <Compile Include="Models\Contexto.cs" />
+    <Compile Include="Models\Estado.cs" />
+    <Compile Include="Models\Fornecedor.cs" />
+    <Compile Include="Models\Funcionario.cs" />
+    <Compile Include="Models\ItensCardapio.cs" />
+    <Compile Include="Models\ItensPedido.cs" />
     <Compile Include="Models\Pais.cs" />
+    <Compile Include="Models\Pedido.cs" />
+    <Compile Include="Models\Produto.cs" />
+    <Compile Include="Models\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

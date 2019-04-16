@@ -12,6 +12,7 @@ namespace AgiliFood.Models
                     : base("EFConnectionString") { }
 
         public virtual DbSet<Pais> Pais { get; set; }
+        public virtual DbSet<Estado> Estado { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
