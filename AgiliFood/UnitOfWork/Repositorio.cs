@@ -1,42 +1,61 @@
 ﻿using AgiliFood.Interfaces;
+using AgiliFood.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
+using System.Data.Entity;
 
 namespace AgiliFood.UnitOfWork
 {
     public class Repositorio<T> : IRepositorio<T> where T : class
     {
+        private Contexto _contexto = null;
+        DbSet<T> _dbSet;
+
+        public Repositorio(Contexto contexto)
+        {
+            _contexto = contexto;
+            _dbSet = _contexto.Set<T>();
+        }
+
         public void Adcionar(T entity)
         {
-            throw new NotImplementedException();
+            _dbSet.Add(entity);
         }
 
         public void Atualizar(T entity)
         {
-            throw new NotImplementedException();
+            _dbSet.Attach(entity);
+            ((IObjectContextAdapter)_contexto).ObjectContext.ObjectStateManager.ChangeObjectState(entity, EntityState.Modified);
         }
 
         public int Contar()
         {
-            throw new NotImplementedException();
+            return _dbSet.Count();
         }
 
         public void Deletar(T entity)
         {
-            throw new NotImplementedException();
+            _dbSet.Remove(entity);
         }
 
         public T Get(Expression<Func<T, bool>> predicate)
         {
-            throw new NotImplementedException();
+            return _dbSet.FirstOrDefault(predicate);
         }
 
         public IEnumerable<T> GetTudo(Expression<Func<T, bool>> predicate = null)
         {
-            throw new NotImplementedException();
+            if (predicate != null)
+            {
+                return _dbSet.Where(predicate);
+            }
+            return _dbSet.AsEnumerable();
         }
     }
 
