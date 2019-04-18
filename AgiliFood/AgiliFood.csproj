@@ -155,7 +155,16 @@
     <Compile Include="Models\Maps\CardapioMap.cs" />
     <Compile Include="Models\Maps\CepMap.cs" />
     <Compile Include="Models\Maps\CidadeMap.cs" />
+    <Compile Include="Models\Maps\ContasReceberMap.cs" />
+    <Compile Include="Models\Maps\EstadoMap.cs" />
+    <Compile Include="Models\Maps\FornecedorMap.cs" />
+    <Compile Include="Models\Maps\FuncionarioMap.cs" />
+    <Compile Include="Models\Maps\ItensPedidoMap.cs" />
+    <Compile Include="Models\Maps\ItensCardapioMap.cs" />
     <Compile Include="Models\Maps\PaisMap.cs" />
+    <Compile Include="Models\Maps\PedidoMap.cs" />
+    <Compile Include="Models\Maps\ProdutoMap.cs" />
+    <Compile Include="Models\Maps\UsuarioMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitOfWork\Repositorio.cs" />
     <Compile Include="UnitOfWork\UnitOfWork.cs" />
