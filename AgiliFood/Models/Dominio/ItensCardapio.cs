@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace AgiliFood.Models
 {
@@ -10,7 +7,9 @@ namespace AgiliFood.Models
         public Guid Id { get; set; }
         public double Valor { get; set; }
         public DateTime TimesTamp { get; set; }
+        public Guid Id_Produto { get; set; }
         public Produto Produto { get; set; }
+        public Guid Id_Cardapio { get; set; }
         public Cardapio Cardapio { get; set; }
     }
 }

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace AgiliFood.Models
 {
@@ -14,6 +11,7 @@ namespace AgiliFood.Models
         public string Senha { get; set; }
         public int Tipo { get; set; }
         public DateTime Cadastro { get; set; }
+        public Guid Id_Funcionario { get; set; }
         public Funcionario Funcionario { get; set; }
     }
 }

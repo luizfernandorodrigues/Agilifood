@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace AgiliFood.Models
 {
@@ -14,6 +11,7 @@ namespace AgiliFood.Models
         public string Bairro { get; set; }
         public string Fone { get; set; }
         public string Cpf { get; set; }
+        public Guid Id_Cep { get; set; }
         public Cep Cep { get; set; }
     }
 }

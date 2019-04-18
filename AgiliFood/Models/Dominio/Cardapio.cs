@@ -12,7 +12,8 @@ namespace AgiliFood.Models
         public string Descricao { get; set; }
         public DateTime Cadastro { get; set; }
         public DateTime TimesTamp { get; set; }
-        public Fornecedor Fornecedor { get; set; }
+        public Guid Id_Fornecedor { get; set; }
+        public virtual Fornecedor Fornecedor { get; set; }
 
     }
 }

@@ -10,6 +10,7 @@ namespace AgiliFood.Models
         public Guid Id { get; set; }
         public string _Cep { get; set; }
         public DateTime TimesTamp { get; set; }
+        public Guid Id_Cidade { get; set; }
         public Cidade Cidade { get; set; }
     }
 }

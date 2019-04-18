@@ -138,20 +138,23 @@
     </Compile>
     <Compile Include="Interfaces\IRepositorio.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
-    <Compile Include="Models\Cardapio.cs" />
-    <Compile Include="Models\Cep.cs" />
-    <Compile Include="Models\Cidade.cs" />
-    <Compile Include="Models\ContasReceber.cs" />
-    <Compile Include="Models\Contexto.cs" />
-    <Compile Include="Models\Estado.cs" />
-    <Compile Include="Models\Fornecedor.cs" />
-    <Compile Include="Models\Funcionario.cs" />
-    <Compile Include="Models\ItensCardapio.cs" />
-    <Compile Include="Models\ItensPedido.cs" />
-    <Compile Include="Models\Pais.cs" />
-    <Compile Include="Models\Pedido.cs" />
-    <Compile Include="Models\Produto.cs" />
-    <Compile Include="Models\Usuario.cs" />
+    <Compile Include="Models\Dominio\Cardapio.cs" />
+    <Compile Include="Models\Dominio\Cep.cs" />
+    <Compile Include="Models\Dominio\Cidade.cs" />
+    <Compile Include="Models\Dominio\ContasReceber.cs" />
+    <Compile Include="Models\Dominio\Contexto.cs" />
+    <Compile Include="Models\Dominio\Estado.cs" />
+    <Compile Include="Models\Dominio\Fornecedor.cs" />
+    <Compile Include="Models\Dominio\Funcionario.cs" />
+    <Compile Include="Models\Dominio\ItensCardapio.cs" />
+    <Compile Include="Models\Dominio\ItensPedido.cs" />
+    <Compile Include="Models\Dominio\Pais.cs" />
+    <Compile Include="Models\Dominio\Pedido.cs" />
+    <Compile Include="Models\Dominio\Produto.cs" />
+    <Compile Include="Models\Dominio\Usuario.cs" />
+    <Compile Include="Models\Maps\CardapioMap.cs" />
+    <Compile Include="Models\Maps\CepMap.cs" />
+    <Compile Include="Models\Maps\PaisMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitOfWork\Repositorio.cs" />
     <Compile Include="UnitOfWork\UnitOfWork.cs" />
@@ -196,6 +199,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\ModeloVisao\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

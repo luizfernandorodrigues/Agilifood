@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace AgiliFood.Models
 {
@@ -18,6 +15,7 @@ namespace AgiliFood.Models
         public string Email { get; set; }
         public DateTime Cadastro { get; set; }
         public DateTime TimesTamp { get; set; }
+        public Guid Id_Cep { get; set; }
         public Cep Cep { get; set; }
     }
 }
