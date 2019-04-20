@@ -16,7 +16,7 @@ namespace AgiliFood.Models.Maps
             Property(x => x.Tipo).HasColumnName("tipo").IsRequired();
             Property(x => x.Imagem).HasColumnName("imagem").HasColumnType("image").IsOptional();
             Property(x => x.TimesTamp).HasColumnName("timestamp").IsRequired();
-            Property(x => x.Preco).HasColumnName("preco").HasColumnType("Numeric(18,2)").IsRequired();
+            Property(x => x.Preco).HasColumnName("preco").HasColumnType("numeric").IsRequired();
         }
     }
 }

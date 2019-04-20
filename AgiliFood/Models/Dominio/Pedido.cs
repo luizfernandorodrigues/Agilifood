@@ -6,7 +6,7 @@ namespace AgiliFood.Models
     {
         public Guid Id { get; set; }
         public DateTime Emissao { get; set; }
-        public double Total { get; set; }
+        public decimal Total { get; set; }
         public Guid Id_Funcionario { get; set; }
         public Funcionario Funcionario { get; set; }
         public Guid Id_Cardapio { get; set; }

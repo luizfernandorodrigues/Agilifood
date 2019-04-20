@@ -10,6 +10,6 @@ namespace AgiliFood.Models
         public int Tipo { get; set; }
         public byte[] Imagem { get; set; }
         public DateTime TimesTamp { get; set; }
-        public double Preco { get; set; }
+        public decimal Preco { get; set; }
     }
 }
