@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using AgiliFood.Models;
+﻿using AgiliFood.Models;
 using AgiliFood.Models.ModeloVisao;
-using AgiliFood.UnitOfWork;
 using AutoMapper;
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Web.Mvc;
 
 namespace AgiliFood.Controllers
 {

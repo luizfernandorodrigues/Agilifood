@@ -140,6 +140,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="AutoMapper\AutoMapperConfig.cs" />
     <Compile Include="AutoMapper\AutoMapperProfile.cs" />
+    <Compile Include="Controllers\CidadeViewModelsController.cs" />
+    <Compile Include="Controllers\EstadoViewModelsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PaisViewModelsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -246,6 +248,16 @@
     <Content Include="Views\PaisViewModels\Details.cshtml" />
     <Content Include="Views\PaisViewModels\Edit.cshtml" />
     <Content Include="Views\PaisViewModels\Index.cshtml" />
+    <Content Include="Views\EstadoViewModels\Create.cshtml" />
+    <Content Include="Views\EstadoViewModels\Delete.cshtml" />
+    <Content Include="Views\EstadoViewModels\Details.cshtml" />
+    <Content Include="Views\EstadoViewModels\Edit.cshtml" />
+    <Content Include="Views\EstadoViewModels\Index.cshtml" />
+    <Content Include="Views\CidadeViewModels\Create.cshtml" />
+    <Content Include="Views\CidadeViewModels\Delete.cshtml" />
+    <Content Include="Views\CidadeViewModels\Details.cshtml" />
+    <Content Include="Views\CidadeViewModels\Edit.cshtml" />
+    <Content Include="Views\CidadeViewModels\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
