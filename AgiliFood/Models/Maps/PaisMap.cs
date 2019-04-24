@@ -22,7 +22,7 @@ namespace AgiliFood.Models.Maps
             HasKey(x => x.Id);
             Property(x => x.Id).HasColumnName("id").HasColumnType("uniqueidentifier");
 
-            Property(x => x.Nome).HasColumnName("numero").HasColumnType("nchar").HasMaxLength(100).IsRequired();
+            Property(x => x.Nome).HasColumnName("nome").HasColumnType("nchar").HasMaxLength(100).IsRequired();
             Property(x => x.Codigo).HasColumnName("codigo").HasColumnType("nchar").HasMaxLength(10).IsOptional();
             Property(x => x.TimesTamp).HasColumnName("timestamp").HasColumnType("datetime").IsRequired();
         }

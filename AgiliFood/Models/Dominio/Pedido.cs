@@ -2,6 +2,9 @@
 
 namespace AgiliFood.Models
 {
+    /// <summary>
+    /// Classe responsavel por representar os campos da view de pedido
+    /// </summary>
     public class Pedido
     {
         public Guid Id { get; set; }

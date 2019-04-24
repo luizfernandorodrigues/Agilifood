@@ -2,21 +2,26 @@
 
 namespace AgiliFood.Interfaces
 {
+    /// <summary>
+    /// Alteração no nome dos atributos
+    /// Autor:  Luiz Fernando
+    /// Data:   23/04/2019
+    /// </summary>
     interface IUnitOfWork
     {
         IRepositorio<Cardapio> CardapiorRepositorio { get; }
-        IRepositorio<Cep> Cep { get; }
-        IRepositorio<Cidade> Cidade { get; }
-        IRepositorio<ContasReceber> ContasReceber { get; }
-        IRepositorio<Estado> Estado { get; }
-        IRepositorio<Fornecedor> Fornecedor { get; }
-        IRepositorio<Funcionario> Funcionario { get; }
-        IRepositorio<ItensCardapio> ItensCardapio { get; }
-        IRepositorio<ItensPedido> ItensPedido { get; }
-        IRepositorio<Pais> Pais { get; }
-        IRepositorio<Pedido> Pedido { get; }
-        IRepositorio<Produto> Produto { get; }
-        IRepositorio<Usuario> Usuario { get; }
+        IRepositorio<Cep> CepRepositorio { get; }
+        IRepositorio<Cidade> CidadeRepositorio { get; }
+        IRepositorio<ContasReceber> ContasReceberRepositorio { get; }
+        IRepositorio<Estado> EstadoRepositorio { get; }
+        IRepositorio<Fornecedor> FornecedorRepositorio { get; }
+        IRepositorio<Funcionario> FuncionarioRepositorio { get; }
+        IRepositorio<ItensCardapio> ItensCardapioRepositorio { get; }
+        IRepositorio<ItensPedido> ItensPedidoRepositorio { get; }
+        IRepositorio<Pais> PaisRepositorio { get; }
+        IRepositorio<Pedido> PedidoRepositorio { get; }
+        IRepositorio<Produto> ProdutoRepositorio { get; }
+        IRepositorio<Usuario> UsuarioRepositorio { get; }
 
         void Commit();
     }

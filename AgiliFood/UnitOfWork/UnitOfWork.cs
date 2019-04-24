@@ -1,12 +1,14 @@
 ﻿using AgiliFood.Interfaces;
 using AgiliFood.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace AgiliFood.UnitOfWork
 {
+    /// <summary>
+    /// Alteração no nome das propriedades
+    /// Autor:  Luiz Fernando
+    /// Data:   23/04/2019
+    /// </summary>
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
         #region propriedades
@@ -48,7 +50,7 @@ namespace AgiliFood.UnitOfWork
         }
 
 
-        public IRepositorio<Cep> Cep
+        public IRepositorio<Cep> CepRepositorio
         {
             get
             {
@@ -60,7 +62,7 @@ namespace AgiliFood.UnitOfWork
             }
         }
 
-        public IRepositorio<Cidade> Cidade
+        public IRepositorio<Cidade> CidadeRepositorio
         {
             get
             {
@@ -71,7 +73,7 @@ namespace AgiliFood.UnitOfWork
                 return cidadeRepositorio;
             }
         }
-        public IRepositorio<ContasReceber> ContasReceber
+        public IRepositorio<ContasReceber> ContasReceberRepositorio
         {
             get
             {
@@ -83,7 +85,7 @@ namespace AgiliFood.UnitOfWork
             }
         }
 
-        public IRepositorio<Estado> Estado
+        public IRepositorio<Estado> EstadoRepositorio
         {
             get
             {
@@ -95,7 +97,7 @@ namespace AgiliFood.UnitOfWork
             }
         }
 
-        public IRepositorio<Fornecedor> Fornecedor
+        public IRepositorio<Fornecedor> FornecedorRepositorio
         {
             get
             {
@@ -107,7 +109,7 @@ namespace AgiliFood.UnitOfWork
             }
         }
 
-        public IRepositorio<Funcionario> Funcionario
+        public IRepositorio<Funcionario> FuncionarioRepositorio
         {
             get
             {
@@ -119,7 +121,7 @@ namespace AgiliFood.UnitOfWork
             }
         }
 
-        public IRepositorio<ItensCardapio> ItensCardapio
+        public IRepositorio<ItensCardapio> ItensCardapioRepositorio
         {
             get
             {
@@ -131,7 +133,7 @@ namespace AgiliFood.UnitOfWork
             }
         }
 
-        public IRepositorio<ItensPedido> ItensPedido
+        public IRepositorio<ItensPedido> ItensPedidoRepositorio
         {
             get
             {
@@ -143,7 +145,7 @@ namespace AgiliFood.UnitOfWork
             }
         }
 
-        public IRepositorio<Pais> Pais
+        public IRepositorio<Pais> PaisRepositorio
         {
             get
             {
@@ -155,7 +157,7 @@ namespace AgiliFood.UnitOfWork
             }
         }
 
-        public IRepositorio<Pedido> Pedido
+        public IRepositorio<Pedido> PedidoRepositorio
         {
             get
             {
@@ -167,7 +169,7 @@ namespace AgiliFood.UnitOfWork
             }
         }
 
-        public IRepositorio<Produto> Produto
+        public IRepositorio<Produto> ProdutoRepositorio
         {
             get
             {
@@ -179,7 +181,7 @@ namespace AgiliFood.UnitOfWork
             }
         }
 
-        public IRepositorio<Usuario> Usuario
+        public IRepositorio<Usuario> UsuarioRepositorio
         {
             get
             {

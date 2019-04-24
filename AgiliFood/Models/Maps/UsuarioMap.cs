@@ -8,6 +8,10 @@ namespace AgiliFood.Models.Maps
     /// <remarks>
     /// Autor:  Luiz Fernando
     /// Data:   20/04/2019
+    /// 
+    /// Alteração:  Removido coluna Tipo e adicionado coluna Adm
+    /// Autor:  Luiz Fernando
+    /// Data:   23/04/2019
     /// </remarks>
     public class UsuarioMap : EntityTypeConfiguration<Usuario>
     {
@@ -22,8 +26,8 @@ namespace AgiliFood.Models.Maps
             Property(x => x.Login).HasColumnName("login").HasColumnType("nchar").HasMaxLength(100).IsRequired();
             Property(x => x.Email).HasColumnName("email").HasColumnType("nchar").HasMaxLength(100).IsRequired();
             Property(x => x.Senha).HasColumnName("senha").HasColumnType("nvarchar").HasMaxLength(4000).IsRequired();
-            Property(x => x.Tipo).HasColumnName("tipo").HasColumnType("numeric").IsRequired();
             Property(x => x.Cadastro).HasColumnName("cadastro").HasColumnType("datetime").IsRequired();
+            Property(x => x.Adm).HasColumnName("adm").HasColumnType("bit").IsRequired();
 
             //fk funcionario
             Property(x => x.Id_Funcionario).HasColumnName("id_funcionario").HasColumnType("uniqueidentifier").IsRequired();
