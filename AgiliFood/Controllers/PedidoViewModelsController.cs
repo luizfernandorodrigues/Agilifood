@@ -30,6 +30,8 @@ namespace AgiliFood.Controllers
         }
         #endregion
 
+        #region Metodos Publicos Actions
+
         // GET: PedidoViewModels
         public ActionResult Index()
         {
@@ -201,5 +203,6 @@ namespace AgiliFood.Controllers
                 return RedirectToAction("Index");
             }
         }
+        #endregion
     }
 }

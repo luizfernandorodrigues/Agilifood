@@ -36,7 +36,7 @@ namespace AgiliFood.UnitOfWork
         }
         #endregion
 
-
+        #region Propriedades Repositorios
         public IRepositorio<Cardapio> CardapiorRepositorio
         {
             get
@@ -192,7 +192,7 @@ namespace AgiliFood.UnitOfWork
                 return usuarioRepositorio;
             }
         }
-
+        #endregion
         public void Commit()
         {
             _contexto.SaveChanges();
