@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using AgiliFood.Models;
-using AgiliFood.Models.ModeloVisao;
+﻿using AgiliFood.Models.ModeloVisao;
 using AutoMapper;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Net;
+using System.Web.Mvc;
 
 namespace AgiliFood.Controllers
 {
@@ -46,7 +42,15 @@ namespace AgiliFood.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CidadeViewModel cidadeViewModel = db.CidadeViewModels.Find(id);
+            try
+            {
+                CidadeViewModel cidadeViewModel = Mapper.Map<CidadeViewModel>(uow.CidadeRepositorio.Get(x => x.Id == id));
+            }
+            catch (Exception ex)
+            {
+
+            }
+            
             if (cidadeViewModel == null)
             {
                 return HttpNotFound();

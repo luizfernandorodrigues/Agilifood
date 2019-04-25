@@ -37,6 +37,5 @@ namespace AgiliFood.Models
         public virtual DbSet<ItensPedido> ItensPedido { get; set; }
         public virtual DbSet<Pedido> Pedido { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
-
     }
 }

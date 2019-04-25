@@ -1,0 +1,66 @@
+﻿@model AgiliFood.Models.ModeloVisao.PedidoViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>PedidoViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Emissao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Emissao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Id_Funcionario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Id_Funcionario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NomeFuncionario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomeFuncionario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Id_Cardapio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Id_Cardapio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DescricaoCardapio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DescricaoCardapio)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
