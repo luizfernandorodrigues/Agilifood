@@ -4,6 +4,7 @@ using AgiliFood.Models.ModeloVisao;
 using System.Web.Mvc;
 using System;
 using AgiliFood.Utilitarios;
+using System.Web.Security;
 
 namespace AgiliFood.Controllers
 {
@@ -48,20 +49,38 @@ namespace AgiliFood.Controllers
             }
             return View(usuarioViewModel);
         }
-        //[HttpPost]
-        //public ActionResult Login (LoginViewModel loginViewModel)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-
-        //        }
-        //        catch ()
-        //        {
-
-        //        }
-        //    }
-        //}
+        [HttpPost]
+        public ActionResult Login(LoginViewModel loginViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (UnitOfWork.UnitOfWork uow = new UnitOfWork.UnitOfWork())
+                    {
+                        Usuario usuario = new Usuario();
+                        usuario = Mapper.Map<Usuario>(loginViewModel);
+                        usuario.Senha = Criptografia.Encrypt(usuario.Senha);
+                        var usuarioLogado = uow.UsuarioRepositorio.Get(x => x.Login == usuario.Login && x.Senha == usuario.Senha);
+                        if (usuarioLogado != null)
+                        {
+                            Session.Add("usuario", usuarioLogado.Nome);
+                            Session.Add("id_usuario", usuarioLogado.Id);
+                            FormsAuthentication.SetAuthCookie(usuario.Nome, true);
+                            return RedirectToAction("Index", "Home", null);
+                        }
+                        else
+                        {
+                            ViewBag.Mensagem = "Login Inválido, Usuário ou Senha Incorretos!";
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Mensagem = string.Format("Ocorreu um erro ao Efetuar o login !\n {0}", ex.Message);
+                }
+            }
+            return View(loginViewModel);
+        }
     }
 }
