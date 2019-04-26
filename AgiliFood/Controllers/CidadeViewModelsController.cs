@@ -3,7 +3,6 @@ using AgiliFood.Models.ModeloVisao;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Net;
 using System.Web.Mvc;
 

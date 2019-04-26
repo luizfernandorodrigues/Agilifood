@@ -150,6 +150,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItensCardapioViewModelsController.cs" />
     <Compile Include="Controllers\ItensPedidoViewModelsController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PaisViewModelsController.cs" />
     <Compile Include="Controllers\PedidoViewModelsController.cs" />
     <Compile Include="Controllers\ProdutoViewModelsController.cs" />
@@ -170,6 +171,18 @@
     <Compile Include="Migrations\201904240041538_modificacao_pais.cs" />
     <Compile Include="Migrations\201904240041538_modificacao_pais.Designer.cs">
       <DependentUpon>201904240041538_modificacao_pais.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904260131465_modificado_usuario.cs" />
+    <Compile Include="Migrations\201904260131465_modificado_usuario.Designer.cs">
+      <DependentUpon>201904260131465_modificado_usuario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904260136018_drp_usuariomodel.cs" />
+    <Compile Include="Migrations\201904260136018_drp_usuariomodel.Designer.cs">
+      <DependentUpon>201904260136018_drp_usuariomodel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904260155532_drop_coluna_dataCadastro.cs" />
+    <Compile Include="Migrations\201904260155532_drop_coluna_dataCadastro.Designer.cs">
+      <DependentUpon>201904260155532_drop_coluna_dataCadastro.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Dominio\Cardapio.cs" />
@@ -208,6 +221,7 @@
     <Compile Include="Models\ModeloVisao\FuncionarioViewModel.cs" />
     <Compile Include="Models\ModeloVisao\ItensCardapioViewModel.cs" />
     <Compile Include="Models\ModeloVisao\ItensPedidoViewModel.cs" />
+    <Compile Include="Models\ModeloVisao\LoginViewModel.cs" />
     <Compile Include="Models\ModeloVisao\PaisViewModel.cs" />
     <Compile Include="Models\ModeloVisao\PedidoViewModel.cs" />
     <Compile Include="Models\ModeloVisao\ProdutoViewModel.cs" />
@@ -215,6 +229,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitOfWork\Repositorio.cs" />
     <Compile Include="UnitOfWork\UnitOfWork.cs" />
+    <Compile Include="Utilitarios\Criptografia.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -278,7 +293,7 @@
     <Content Include="Views\FuncionarioViewModels\Details.cshtml" />
     <Content Include="Views\FuncionarioViewModels\Edit.cshtml" />
     <Content Include="Views\FuncionarioViewModels\Index.cshtml" />
-    <Content Include="Views\UsuarioViewModels\Create.cshtml" />
+    <Content Include="Views\Login\Register.cshtml" />
     <Content Include="Views\UsuarioViewModels\Delete.cshtml" />
     <Content Include="Views\UsuarioViewModels\Details.cshtml" />
     <Content Include="Views\UsuarioViewModels\Edit.cshtml" />
@@ -318,6 +333,7 @@
     <Content Include="Views\ContasReceberViewModels\Details.cshtml" />
     <Content Include="Views\ContasReceberViewModels\Edit.cshtml" />
     <Content Include="Views\ContasReceberViewModels\Index.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -344,6 +360,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904240041538_modificacao_pais.resx">
       <DependentUpon>201904240041538_modificacao_pais.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904260131465_modificado_usuario.resx">
+      <DependentUpon>201904260131465_modificado_usuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904260136018_drp_usuariomodel.resx">
+      <DependentUpon>201904260136018_drp_usuariomodel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904260155532_drop_coluna_dataCadastro.resx">
+      <DependentUpon>201904260155532_drop_coluna_dataCadastro.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

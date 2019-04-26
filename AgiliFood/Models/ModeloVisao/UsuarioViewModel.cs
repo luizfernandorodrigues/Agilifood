@@ -12,7 +12,13 @@ namespace AgiliFood.Models.ModeloVisao
     /// <remarks>
     /// Autor:  Luiz Fernando
     /// Data:   23/04/2019
+    /// 
+    /// Alteração: removido o campo de nome de funcionario e id funcionario e data de cadastro
+    ///     setado o tipo de dados para o campo de senha
+    /// Autor:  Luiz Fernando
+    /// Data:   25/04/2019
     /// </remarks>
+    
     public class UsuarioViewModel
     {
         public Guid Id { get; set; }
@@ -30,23 +36,17 @@ namespace AgiliFood.Models.ModeloVisao
         [Display(Name = "E-mail")]
         [Required(ErrorMessage = "Email é Obrigatória!")]
         [MaxLength(100, ErrorMessage = "Email só pode conter 100 caracteres")]
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
         [Display(Name = "Senha")]
         [Required(ErrorMessage = "Senha é Obrigatória!")]
+        [DataType(DataType.Password)]
         public string Senha { get; set; }
 
-        [Display(Name = "Tipo")]
+        [Display(Name = "Administrador")]
         [Required(ErrorMessage = "Tipo é Obrigatória!")]
         public bool Adm { get; set; }
 
-        [Display(Name = "Data de Cadastro")]
-        [Required(ErrorMessage = "Data de Cadastro é Obrigatória!")]
-        public DateTime Cadastro { get; set; }
-
-        [Required(ErrorMessage = "Funcionario é Obrigatória!")]
-        public Guid Id_Funcionario { get; set; }
-
-        public string NomeFuncionario { get; set; }
     }
 }

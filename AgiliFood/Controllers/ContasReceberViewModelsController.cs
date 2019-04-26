@@ -1,39 +1,68 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using AgiliFood.Models;
+﻿using AgiliFood.Models;
 using AgiliFood.Models.ModeloVisao;
+using AutoMapper;
+using System;
+using System.Net;
+using System.Web.Mvc;
 
 namespace AgiliFood.Controllers
 {
     public class ContasReceberViewModelsController : Controller
     {
-        private Contexto db = new Contexto();
+        #region Propriedades
+        private readonly UnitOfWork.UnitOfWork uow;
+        #endregion
 
+        #region Construtores
+        public ContasReceberViewModelsController()
+        {
+            uow = new UnitOfWork.UnitOfWork();
+        }
+
+        public ContasReceberViewModelsController(UnitOfWork.UnitOfWork unitOfWork)
+        {
+            uow = unitOfWork;
+        }
+        #endregion
+
+        #region Metodos Publicos Actions
         // GET: ContasReceberViewModels
         public ActionResult Index()
         {
-            return View(db.ContasReceberViewModels.ToList());
+            try
+            {
+                return View(uow.ContasReceberRepositorio.GetTudo());
+            }
+            catch (Exception ex)
+            {
+                TempData["mensagem"] = string.Format("Ocorreu um erro!\n {0}", ex.Message);
+                return View();
+            }
         }
 
         // GET: ContasReceberViewModels/Details/5
         public ActionResult Details(Guid? id)
         {
+            ContasReceberViewModel contasReceberViewModel = null;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ContasReceberViewModel contasReceberViewModel = db.ContasReceberViewModels.Find(id);
-            if (contasReceberViewModel == null)
+
+            try
             {
-                return HttpNotFound();
+                contasReceberViewModel = Mapper.Map<ContasReceberViewModel>(uow.ContasReceberRepositorio.Get(x => x.Id == id));
+                return View(contasReceberViewModel);
             }
-            return View(contasReceberViewModel);
+            catch (Exception ex)
+            {
+                TempData["mensagem"] = string.Format("Ocorreu um Erro! \n {0}", ex.Message);
+                if (contasReceberViewModel == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(contasReceberViewModel);
+            }
         }
 
         // GET: ContasReceberViewModels/Create
@@ -43,50 +72,78 @@ namespace AgiliFood.Controllers
         }
 
         // POST: ContasReceberViewModels/Create
-        // Para se proteger de mais ataques, ative as propriedades específicas a que você quer se conectar. Para 
-        // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Emissao,Valor,ValorPago,NomeFuncionario,NumeroPedido,NomeFornecedor")] ContasReceberViewModel contasReceberViewModel)
         {
             if (ModelState.IsValid)
             {
-                contasReceberViewModel.Id = Guid.NewGuid();
-                db.ContasReceberViewModels.Add(contasReceberViewModel);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    ContasReceber contasReceber = new ContasReceber();
+                    contasReceberViewModel.Id = Guid.NewGuid();
+                    contasReceber = Mapper.Map<ContasReceber>(contasReceberViewModel);
+                    uow.ContasReceberRepositorio.Adcionar(contasReceber);
+                    uow.Commit();
+                    TempData["mensagem"] = string.Format("Registro Cadastrado com Sucesso!");
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    TempData["mensagem"] = string.Format("Não Foi Possivel Gravar o Registro!\n {0}", ex.Message);
+                    return View();
+                }
             }
-
             return View(contasReceberViewModel);
         }
 
         // GET: ContasReceberViewModels/Edit/5
         public ActionResult Edit(Guid? id)
         {
+            ContasReceberViewModel contasReceberViewModel = null;
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ContasReceberViewModel contasReceberViewModel = db.ContasReceberViewModels.Find(id);
-            if (contasReceberViewModel == null)
+
+            try
             {
-                return HttpNotFound();
+                contasReceberViewModel = Mapper.Map<ContasReceberViewModel>(uow.ContasReceberRepositorio.Get(x => x.Id == id));
+                return View(contasReceberViewModel);
             }
-            return View(contasReceberViewModel);
+            catch (Exception ex)
+            {
+                TempData["mensagem"] = string.Format("Ocorreu um erro!\n {0}", ex.Message);
+                if (contasReceberViewModel == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(contasReceberViewModel);
+            }
         }
 
         // POST: ContasReceberViewModels/Edit/5
-        // Para se proteger de mais ataques, ative as propriedades específicas a que você quer se conectar. Para 
-        // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Emissao,Valor,ValorPago,NomeFuncionario,NumeroPedido,NomeFornecedor")] ContasReceberViewModel contasReceberViewModel)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(contasReceberViewModel).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    ContasReceber contasReceber = new ContasReceber();
+                    contasReceber = Mapper.Map<ContasReceber>(contasReceberViewModel);
+                    uow.ContasReceberRepositorio.Atualizar(contasReceber);
+                    uow.Commit();
+                    TempData["mensagem"] = string.Format("Registro Alterado Com Sucesso!");
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    TempData["mensagem"] = string.Format("Ocorreu ao Alterar o Registro!\n {0}", ex.Message);
+                    return RedirectToAction("Index");
+                }
             }
             return View(contasReceberViewModel);
         }
@@ -94,16 +151,26 @@ namespace AgiliFood.Controllers
         // GET: ContasReceberViewModels/Delete/5
         public ActionResult Delete(Guid? id)
         {
+            ContasReceberViewModel contasReceberViewModel = null;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ContasReceberViewModel contasReceberViewModel = db.ContasReceberViewModels.Find(id);
-            if (contasReceberViewModel == null)
+
+            try
             {
-                return HttpNotFound();
+                contasReceberViewModel = Mapper.Map<ContasReceberViewModel>(uow.ContasReceberRepositorio.Get(x => x.Id == id));
+                return View(contasReceberViewModel);
             }
-            return View(contasReceberViewModel);
+            catch (Exception ex)
+            {
+                TempData["mensagem"] = string.Format("Ocorreu um erro!\n {0}", ex.Message);
+                if (contasReceberViewModel == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(contasReceberViewModel);
+            }
         }
 
         // POST: ContasReceberViewModels/Delete/5
@@ -111,19 +178,21 @@ namespace AgiliFood.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            ContasReceberViewModel contasReceberViewModel = db.ContasReceberViewModels.Find(id);
-            db.ContasReceberViewModels.Remove(contasReceberViewModel);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            try
             {
-                db.Dispose();
+                ContasReceber contasReceber = new ContasReceber();
+                contasReceber = uow.ContasReceberRepositorio.Get(x => x.Id == id);
+                uow.ContasReceberRepositorio.Deletar(contasReceber);
+                uow.Commit();
+                TempData["mensagem"] = string.Format("Registro Excluido com sucesso");
+                return RedirectToAction("Index");
             }
-            base.Dispose(disposing);
+            catch (Exception ex)
+            {
+                TempData["mensagem"] = string.Format("Ocorreu um Erro ao excluir o registro!\n {0}", ex.Message);
+                return RedirectToAction("Index");
+            }
         }
+        #endregion
     }
 }

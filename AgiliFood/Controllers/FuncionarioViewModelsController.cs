@@ -8,32 +8,66 @@ using System.Web;
 using System.Web.Mvc;
 using AgiliFood.Models;
 using AgiliFood.Models.ModeloVisao;
+using AutoMapper;
 
 namespace AgiliFood.Controllers
 {
     public class FuncionarioViewModelsController : Controller
     {
-        private Contexto db = new Contexto();
+        #region Propriedades
+        private readonly UnitOfWork.UnitOfWork uow;
+        #endregion
 
+        #region Construtores
+        public FuncionarioViewModelsController()
+        {
+            uow = new UnitOfWork.UnitOfWork();
+        }
+
+        public FuncionarioViewModelsController(UnitOfWork.UnitOfWork unitOfWork)
+        {
+            uow = unitOfWork;
+        }
+        #endregion
+
+        #region Metodos Publicos Actions
         // GET: FuncionarioViewModels
         public ActionResult Index()
         {
-            return View(db.FuncionarioViewModels.ToList());
+            try
+            {
+                return View(uow.FuncionarioRepositorio.GetTudo());
+            }
+            catch (Exception ex)
+            {
+                TempData["mensagem"] = string.Format("Ocorreu um erro!\n {0}", ex.Message);
+                return View();
+            }
         }
 
         // GET: FuncionarioViewModels/Details/5
         public ActionResult Details(Guid? id)
         {
+            FuncionarioViewModel funcionarioViewModel = null;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            FuncionarioViewModel funcionarioViewModel = db.FuncionarioViewModels.Find(id);
-            if (funcionarioViewModel == null)
+
+            try
             {
-                return HttpNotFound();
+                funcionarioViewModel = Mapper.Map<FuncionarioViewModel>(uow.FuncionarioRepositorio.Get(x => x.Id == id));
+                return View(funcionarioViewModel);
             }
-            return View(funcionarioViewModel);
+            catch (Exception ex)
+            {
+                TempData["mensagem"] = string.Format("Ocorreu um Erro! \n {0}", ex.Message);
+                if (funcionarioViewModel == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(funcionarioViewModel);
+            }
         }
 
         // GET: FuncionarioViewModels/Create
@@ -43,50 +77,78 @@ namespace AgiliFood.Controllers
         }
 
         // POST: FuncionarioViewModels/Create
-        // Para se proteger de mais ataques, ative as propriedades específicas a que você quer se conectar. Para 
-        // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Nome,Endereco,NumeroEndereco,Bairro,Fone,Cpf,Id_Cep,Cep")] FuncionarioViewModel funcionarioViewModel)
         {
             if (ModelState.IsValid)
             {
-                funcionarioViewModel.Id = Guid.NewGuid();
-                db.FuncionarioViewModels.Add(funcionarioViewModel);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    Funcionario funcionario = new Funcionario();
+                    funcionarioViewModel.Id = Guid.NewGuid();
+                    funcionario = Mapper.Map<Funcionario>(funcionarioViewModel);
+                    uow.FuncionarioRepositorio.Adcionar(funcionario);
+                    uow.Commit();
+                    TempData["mensagem"] = string.Format("Registro Cadastrado com Sucesso!");
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    TempData["mensagem"] = string.Format("Não Foi Possivel Gravar o Registro!\n {0}", ex.Message);
+                    return View();
+                }
             }
-
             return View(funcionarioViewModel);
         }
 
         // GET: FuncionarioViewModels/Edit/5
         public ActionResult Edit(Guid? id)
         {
+            FuncionarioViewModel funcionarioViewModel = null;
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            FuncionarioViewModel funcionarioViewModel = db.FuncionarioViewModels.Find(id);
-            if (funcionarioViewModel == null)
+
+            try
             {
-                return HttpNotFound();
+                funcionarioViewModel = Mapper.Map<FuncionarioViewModel>(uow.FuncionarioRepositorio.Get(x => x.Id == id));
+                return View(funcionarioViewModel);
             }
-            return View(funcionarioViewModel);
+            catch (Exception ex)
+            {
+                TempData["mensagem"] = string.Format("Ocorreu um erro!\n {0}", ex.Message);
+                if (funcionarioViewModel == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(funcionarioViewModel);
+            }
         }
 
         // POST: FuncionarioViewModels/Edit/5
-        // Para se proteger de mais ataques, ative as propriedades específicas a que você quer se conectar. Para 
-        // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Nome,Endereco,NumeroEndereco,Bairro,Fone,Cpf,Id_Cep,Cep")] FuncionarioViewModel funcionarioViewModel)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(funcionarioViewModel).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    Funcionario funcionario = new Funcionario();
+                    funcionario = Mapper.Map<Funcionario>(funcionarioViewModel);
+                    uow.FuncionarioRepositorio.Atualizar(funcionario);
+                    uow.Commit();
+                    TempData["mensagem"] = string.Format("Registro Alterado Com Sucesso!");
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    TempData["mensagem"] = string.Format("Ocorreu ao Alterar o Registro!\n {0}", ex.Message);
+                    return RedirectToAction("Index");
+                }
             }
             return View(funcionarioViewModel);
         }
@@ -94,16 +156,26 @@ namespace AgiliFood.Controllers
         // GET: FuncionarioViewModels/Delete/5
         public ActionResult Delete(Guid? id)
         {
+            FuncionarioViewModel funcionarioViewModel = null;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            FuncionarioViewModel funcionarioViewModel = db.FuncionarioViewModels.Find(id);
-            if (funcionarioViewModel == null)
+
+            try
             {
-                return HttpNotFound();
+                funcionarioViewModel = Mapper.Map<FuncionarioViewModel>(uow.FuncionarioRepositorio.Get(x => x.Id == id));
+                return View(funcionarioViewModel);
             }
-            return View(funcionarioViewModel);
+            catch (Exception ex)
+            {
+                TempData["mensagem"] = string.Format("Ocorreu um erro!\n {0}", ex.Message);
+                if (funcionarioViewModel == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(funcionarioViewModel);
+            }
         }
 
         // POST: FuncionarioViewModels/Delete/5
@@ -111,19 +183,21 @@ namespace AgiliFood.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            FuncionarioViewModel funcionarioViewModel = db.FuncionarioViewModels.Find(id);
-            db.FuncionarioViewModels.Remove(funcionarioViewModel);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            try
             {
-                db.Dispose();
+                Funcionario funcionario = new Funcionario();
+                funcionario = uow.FuncionarioRepositorio.Get(x => x.Id == id);
+                uow.FuncionarioRepositorio.Deletar(funcionario);
+                uow.Commit();
+                TempData["mensagem"] = string.Format("Registro Excluido com sucesso");
+                return RedirectToAction("Index");
             }
-            base.Dispose(disposing);
+            catch (Exception ex)
+            {
+                TempData["mensagem"] = string.Format("Ocorreu um Erro ao excluir o registro!\n {0}", ex.Message);
+                return RedirectToAction("Index");
+            }
         }
+        #endregion
     }
 }
