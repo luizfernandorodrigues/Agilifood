@@ -6,6 +6,15 @@ namespace AgiliFood.Controllers
     {
         public ActionResult Index()
         {
+            if (!Request.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            return RedirectToAction("Menu");
+        }
+
+        public ActionResult Menu()
+        {
             return View();
         }
 

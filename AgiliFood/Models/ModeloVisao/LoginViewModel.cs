@@ -8,6 +8,10 @@ namespace AgiliFood.Models.ModeloVisao
     /// <remarks>
     /// Autor:  Luiz Fernando
     /// Data:   25/04/2019
+    /// 
+    /// Alteração: Removido o campo email
+    /// Autor:  Luiz Fernando
+    /// Data:   26/04/2019 
     /// </remarks>
     public class LoginViewModel
     {
@@ -20,8 +24,5 @@ namespace AgiliFood.Models.ModeloVisao
         [DataType(DataType.Password)]
         public string Senha { get; set; }
 
-        [Required(ErrorMessage = "Informe o email")]
-        [EmailAddress]
-        public string Email { get; set; }
     }
 }

@@ -10,10 +10,47 @@ namespace AgiliFood.Controllers
 {
     public class LoginController : Controller
     {
+
         // GET: Login
+        [HttpGet]
         public ActionResult Login()
         {
             LoginViewModel loginViewModel = new LoginViewModel();
+            return View(loginViewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Login(LoginViewModel loginViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (UnitOfWork.UnitOfWork uow = new UnitOfWork.UnitOfWork())
+                    {
+                        Usuario usuario = new Usuario();
+                        usuario.Login = loginViewModel.Login;
+                        usuario.Senha = loginViewModel.Senha;
+                        usuario.Senha = Criptografia.Encrypt(usuario.Senha);
+                        var usuarioLogado = uow.UsuarioRepositorio.Get(x => x.Login == usuario.Login && x.Senha == usuario.Senha);
+                        if (usuarioLogado != null)
+                        {
+                            Session.Add("usuario", usuarioLogado.Nome);
+                            Session.Add("id_usuario", usuarioLogado.Id);
+                            FormsAuthentication.SetAuthCookie(usuario.Nome, false);
+                            return RedirectToAction("Index", "Home", null);
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "Senha ou Usuário Incorreto!");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", string.Format("Ocorreu um erro ao Efetuar o login !\n {0}", ex.Message));
+                }
+            }
             return View(loginViewModel);
         }
 
@@ -39,7 +76,7 @@ namespace AgiliFood.Controllers
                         uow.UsuarioRepositorio.Adcionar(usuario);
                         uow.Commit();
                         TempData["mensagem"] = string.Format("Registro Cadastrado com Sucesso!");
-                        return RedirectToAction("Login");
+                        return RedirectToAction("Index", "Home", null);
                     }
                 }
                 catch (Exception ex)
@@ -48,39 +85,6 @@ namespace AgiliFood.Controllers
                 }
             }
             return View(usuarioViewModel);
-        }
-        [HttpPost]
-        public ActionResult Login(LoginViewModel loginViewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    using (UnitOfWork.UnitOfWork uow = new UnitOfWork.UnitOfWork())
-                    {
-                        Usuario usuario = new Usuario();
-                        usuario = Mapper.Map<Usuario>(loginViewModel);
-                        usuario.Senha = Criptografia.Encrypt(usuario.Senha);
-                        var usuarioLogado = uow.UsuarioRepositorio.Get(x => x.Login == usuario.Login && x.Senha == usuario.Senha);
-                        if (usuarioLogado != null)
-                        {
-                            Session.Add("usuario", usuarioLogado.Nome);
-                            Session.Add("id_usuario", usuarioLogado.Id);
-                            FormsAuthentication.SetAuthCookie(usuario.Nome, true);
-                            return RedirectToAction("Index", "Home", null);
-                        }
-                        else
-                        {
-                            ViewBag.Mensagem = "Login Inválido, Usuário ou Senha Incorretos!";
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    ViewBag.Mensagem = string.Format("Ocorreu um erro ao Efetuar o login !\n {0}", ex.Message);
-                }
-            }
-            return View(loginViewModel);
         }
     }
 }

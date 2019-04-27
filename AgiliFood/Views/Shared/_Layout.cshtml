@@ -23,11 +23,6 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Início", "Index", "Home")</li>
                     <li>@Html.ActionLink("Pedido", "Index", "PedidoViewModel")</li>
-                    <li>@Html.ActionLink("Cadastro Fornecedor", "Index", "FornecedorViewModel")</li>
-                    <li>@Html.ActionLink("Cadastro de Pais", "Index", "PaisViewModel")</li>
-                    <li>@Html.ActionLink("cadastro de Estado", "Index", "EstadoViewModel")</li>
-                    <li>@Html.ActionLink("Cadastro de Cidade", "Index", "CidadeViewModel")</li>
-                    <li>@Html.ActionLink("Cadastro de Cep", "Index", "CepViewModel")</li>
                     <li>@Html.ActionLink("Registra Usuário", "Register", "Login")</li>
                     <li>@Html.ActionLink("Sobre", "About", "Home")</li>
                     <li>@Html.ActionLink("Contato", "Contact", "Home")</li>
@@ -36,10 +31,14 @@
         </div>
     </div>
     <div class="container body-content">
+        @if (TempData["mensagem"] != null)
+        {
+            <div class="alert alert-success">@TempData["mensagem"]</div>
+        }
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Meu Aplicativo ASP.NET</p>
+            <p>&copy; @DateTime.Now.Year - Agili Software Brasil</p>
         </footer>
     </div>
 

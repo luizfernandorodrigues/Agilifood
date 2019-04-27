@@ -226,6 +226,7 @@
     <Compile Include="Models\ModeloVisao\PedidoViewModel.cs" />
     <Compile Include="Models\ModeloVisao\ProdutoViewModel.cs" />
     <Compile Include="Models\ModeloVisao\UsuarioViewModel.cs" />
+    <Compile Include="Models\Roles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitOfWork\Repositorio.cs" />
     <Compile Include="UnitOfWork\UnitOfWork.cs" />
@@ -334,6 +335,7 @@
     <Content Include="Views\ContasReceberViewModels\Edit.cshtml" />
     <Content Include="Views\ContasReceberViewModels\Index.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Home\Menu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
