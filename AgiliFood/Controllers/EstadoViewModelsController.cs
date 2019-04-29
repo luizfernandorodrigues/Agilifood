@@ -60,6 +60,16 @@ namespace AgiliFood.Controllers
         // GET: EstadoViewModels/Create
         public ActionResult Create()
         {
+            try
+            {
+                ViewBag.ListaPais = new SelectList(uow.PaisRepositorio.GetTudo(), "id", "nome");
+            }
+            catch (Exception ex)
+            {
+                TempData["mensagem"] = string.Format("Ocorreu um Erro ao Buscar os Paises! \n {0}", ex.Message);
+            }
+
+
             return View();
         }
 

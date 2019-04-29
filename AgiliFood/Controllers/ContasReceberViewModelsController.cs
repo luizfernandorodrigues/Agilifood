@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace AgiliFood.Controllers
 {
+    [Authorize(Roles = "Administrador")]
     public class ContasReceberViewModelsController : Controller
     {
         #region Propriedades

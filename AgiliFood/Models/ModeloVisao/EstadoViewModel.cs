@@ -25,5 +25,6 @@ namespace AgiliFood.Models.ModeloVisao
         [Required(ErrorMessage = "Sigla é Obrigatório!"), MaxLength(2, ErrorMessage = "Sigla deve conter no maximo 2 caracteres!")]
         public string Sigla { get; set; }
         public string NomePais { get; set; }
+        public Guid Id_Pais { get; set; }
     }
 }

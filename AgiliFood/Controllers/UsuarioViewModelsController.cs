@@ -27,6 +27,7 @@ namespace AgiliFood.Controllers
 
         #region Metodos Publicos Actions
         // GET: UsuarioViewModels
+        [Authorize(Roles = "Administrador")]
         public ActionResult Index()
         {
             try
@@ -42,6 +43,7 @@ namespace AgiliFood.Controllers
         }
 
         // GET: UsuarioViewModels/Details/5
+        [Authorize(Roles = "Administrador")]
         public ActionResult Details(Guid? id)
         {
             UsuarioViewModel usuarioViewModel = null;
@@ -74,6 +76,7 @@ namespace AgiliFood.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador")]
         public ActionResult Create([Bind(Include = "Id,Nome,Login,Email,Senha,Adm,Cadastro,Id_Funcionario,NomeFuncionario")] UsuarioViewModel usuarioViewModel)
         {
             if (ModelState.IsValid)
@@ -98,6 +101,7 @@ namespace AgiliFood.Controllers
         }
 
         // GET: UsuarioViewModels/Edit/5
+        [Authorize(Roles = "Administrador")]
         public ActionResult Edit(Guid? id)
         {
             UsuarioViewModel usuarioViewModel = null;
@@ -125,6 +129,7 @@ namespace AgiliFood.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador")]
         public ActionResult Edit([Bind(Include = "Id,Nome,Login,Email,Senha,Adm,Cadastro,Id_Funcionario,NomeFuncionario")] UsuarioViewModel usuarioViewModel)
         {
             if (ModelState.IsValid)
@@ -148,6 +153,7 @@ namespace AgiliFood.Controllers
         }
 
         // GET: UsuarioViewModels/Delete/5
+        [Authorize(Roles = "Administrador")]
         public ActionResult Delete(Guid? id)
         {
             UsuarioViewModel usuarioViewModel = null;
@@ -175,6 +181,7 @@ namespace AgiliFood.Controllers
         // POST: UsuarioViewModels/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador")]
         public ActionResult DeleteConfirmed(Guid id)
         {
             try

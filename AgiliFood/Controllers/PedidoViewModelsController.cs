@@ -1,5 +1,6 @@
 ﻿using AgiliFood.Models;
 using AgiliFood.Models.ModeloVisao;
+using AgiliFood.Negocio;
 using AutoMapper;
 using System;
 using System.Net;
@@ -88,6 +89,17 @@ namespace AgiliFood.Controllers
                     pedido = Mapper.Map<Pedido>(pedidoViewModel);
                     uow.PedidoRepositorio.Adcionar(pedido);
                     uow.Commit();
+                    //gera financeiro
+                    GeraContasReceber geraContasReceber = new GeraContasReceber();
+                    bool pedidoGerado = geraContasReceber.GerarContasReceber(pedido);
+                    if (pedidoGerado)
+                    {
+                        TempData["mensagemPedido"] = "Financeiro Gerado com Sucesso";
+                    }
+                    else
+                    {
+                        TempData["mensagemPedido"] = "Não Foi Possível Gerar o Financeiro!";
+                    }
                     TempData["mensagem"] = string.Format("Registro Cadastrado com Sucesso!");
                     return RedirectToAction("Index");
                 }

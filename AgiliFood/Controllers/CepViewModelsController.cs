@@ -31,7 +31,8 @@ namespace AgiliFood.Controllers
         {
             try
             {
-                return View(uow.CepRepositorio.GetTudo());
+                IEquatable<CepViewModel> lista = Mapper.Map<IEquatable<CepViewModel>>(uow.CepRepositorio.GetTudo());
+                return View(lista);
             }
             catch (Exception ex)
             {
