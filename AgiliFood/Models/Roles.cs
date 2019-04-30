@@ -42,12 +42,19 @@ namespace AgiliFood.Models
         /// <returns></returns>
         public override string[] GetRolesForUser(string username)
         {
-            UnitOfWork.UnitOfWork uow = new UnitOfWork.UnitOfWork();
-            Usuario usuario = new Usuario();
-            usuario = uow.UsuarioRepositorio.Get(x => x.Login == username);
-            string roles = usuario.Adm == true ? "Administrador" : "Usuario";
-            string[] retorno = { roles };
-            return retorno;
+            try
+            {
+                UnitOfWork.UnitOfWork uow = new UnitOfWork.UnitOfWork();
+                Usuario usuario = new Usuario();
+                usuario = uow.UsuarioRepositorio.Get(x => x.Login == username);
+                string roles = usuario.Adm == true ? "Administrador" : "Usuario";
+                string[] retorno = { roles };
+                return retorno;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         public override string[] GetUsersInRole(string roleName)

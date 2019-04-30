@@ -57,7 +57,7 @@ namespace AgiliFood.Controllers
             }
             catch (Exception ex)
             {
-                TempData["mensagem"] = string.Format("Ocorreu um Erro! \n {0}", ex.Message);
+                ModelState.AddModelError("", string.Format("Ocorreu um Erro! \n {0}", ex.Message));
                 if (cepViewModel == null)
                 {
                     return HttpNotFound();
@@ -90,7 +90,7 @@ namespace AgiliFood.Controllers
                 }
                 catch (Exception ex)
                 {
-                    TempData["mensagem"] = string.Format("Não Foi Possivel Gravar o Registro!\n {0}", ex.Message);
+                    ModelState.AddModelError("", string.Format("Não Foi Possivel Gravar o Registro!\n {0}", ex.Message));
                     return View();
                 }
             }
@@ -114,7 +114,7 @@ namespace AgiliFood.Controllers
             }
             catch (Exception ex)
             {
-                TempData["mensagem"] = string.Format("Ocorreu um erro!\n {0}", ex.Message);
+                ModelState.AddModelError("", string.Format("Ocorreu um erro!\n {0}", ex.Message));
                 if (cepViewModel == null)
                 {
                     return HttpNotFound();

@@ -38,7 +38,7 @@ namespace AgiliFood.Controllers
                         {
                             Session.Add("usuario", usuarioLogado.Nome);
                             Session.Add("id_usuario", usuarioLogado.Id);
-                            FormsAuthentication.SetAuthCookie(usuario.Nome, false);
+                            FormsAuthentication.SetAuthCookie(usuario.Login, false);
                             if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
                                 && returnUrl.StartsWith("//") && returnUrl.StartsWith("/\\"))
                             {
@@ -89,7 +89,7 @@ namespace AgiliFood.Controllers
                 }
                 catch (Exception ex)
                 {
-                    TempData["mensagem"] = string.Format("Registro Falhou\n {0}", ex.Message);
+                    ModelState.AddModelError("", string.Format("Registro Falhou\n {0}", ex.Message));
                 }
             }
             return View(usuarioViewModel);
