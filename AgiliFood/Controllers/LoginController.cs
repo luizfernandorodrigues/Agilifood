@@ -13,14 +13,15 @@ namespace AgiliFood.Controllers
 
         // GET: Login
         [HttpGet]
-        public ActionResult Login()
+        public ActionResult Login(string returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
             LoginViewModel loginViewModel = new LoginViewModel();
             return View(loginViewModel);
         }
 
         [HttpPost]
-        public ActionResult Login(LoginViewModel loginViewModel)
+        public ActionResult Login(LoginViewModel loginViewModel, string returnUrl)
         {
             if (ModelState.IsValid)
             {
@@ -38,6 +39,11 @@ namespace AgiliFood.Controllers
                             Session.Add("usuario", usuarioLogado.Nome);
                             Session.Add("id_usuario", usuarioLogado.Id);
                             FormsAuthentication.SetAuthCookie(usuario.Nome, false);
+                            if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
+                                && returnUrl.StartsWith("//") && returnUrl.StartsWith("/\\"))
+                            {
+                                return Redirect(returnUrl);
+                            }
                             return RedirectToAction("Index", "Home", null);
                         }
                         else
@@ -54,6 +60,7 @@ namespace AgiliFood.Controllers
             return View(loginViewModel);
         }
 
+        [Authorize(Roles = "Administrador")]
         public ActionResult Register()
         {
             UsuarioViewModel usuarioViewModel = new UsuarioViewModel();
@@ -61,6 +68,7 @@ namespace AgiliFood.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Administrador")]
         public ActionResult Register(UsuarioViewModel usuarioViewModel)
         {
             if (ModelState.IsValid)

@@ -5,7 +5,7 @@
 
 }
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Login", "Login", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal"}))
 {
     @Html.AntiForgeryToken()
     <div class="form-horizontal">

@@ -69,6 +69,7 @@ namespace AgiliFood.Controllers
         }
 
         // GET: UsuarioViewModels/Create
+        [Authorize(Roles = "Administrador")]
         public ActionResult Create()
         {
             return View();
