@@ -5,9 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Web.Mvc;
+using System.Linq;
+using PagedList;
 
 namespace AgiliFood.Controllers
 {
+    [Authorize(Roles = "Administrador")]
     public class EstadoViewModelsController : Controller
     {
         #region Propriedades
@@ -32,12 +35,12 @@ namespace AgiliFood.Controllers
         {
             try
             {
-                IEnumerable<PaisViewModel> lista = Mapper.Map<IEnumerable<PaisViewModel>>(uow.EstadoRepositorio.GetTudo());
-                return View(lista);
+                IEnumerable<Estado> lst = uow.EstadoRepositorio.GetTudo();
+                return View(lst);
             }
             catch (Exception ex)
             {
-                TempData["mensagem"] = string.Format("Ocorreu um Erro na Busca dos Estados:\n {0}", ex.Message);
+                ModelState.AddModelError("", string.Format("Ocorreu um Erro na Busca dos Estados:\n {0}", ex.Message));
                 return View();
             }
         }
@@ -45,14 +48,26 @@ namespace AgiliFood.Controllers
         // GET: EstadoViewModels/Details/5
         public ActionResult Details(Guid? id)
         {
+            EstadoViewModel estadoViewModel = null;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            EstadoViewModel estadoViewModel = Mapper.Map<EstadoViewModel>(uow.EstadoRepositorio.Get(x => x.Id == id));
-            if (estadoViewModel == null)
+            try
             {
-                return HttpNotFound();
+                estadoViewModel = Mapper.Map<EstadoViewModel>(uow.EstadoRepositorio.Get(x => x.Id == id));
+                Pais pais = new Pais();
+                pais = uow.PaisRepositorio.Get(x => x.Id == estadoViewModel.Id_Pais);
+                estadoViewModel.NomePais = pais.Nome;
+                return View(estadoViewModel);
+            }
+            catch (Exception ex)
+            {
+                TempData["mensagem"] = string.Format("Ocorreu um Erro:\n {0}", ex.Message);
+                if (estadoViewModel == null)
+                {
+                    return HttpNotFound();
+                }
             }
             return View(estadoViewModel);
         }
@@ -62,29 +77,31 @@ namespace AgiliFood.Controllers
         {
             try
             {
-                ViewBag.ListaPais = new SelectList(uow.PaisRepositorio.GetTudo(), "id", "nome");
+                List<PaisViewModel> listaPais = Mapper.Map<List<PaisViewModel>>(uow.PaisRepositorio.GetTudo());
+
+                ViewBag.PaisLista = listaPais;
+                return View();
             }
             catch (Exception ex)
             {
                 TempData["mensagem"] = string.Format("Ocorreu um Erro ao Buscar os Paises! \n {0}", ex.Message);
+                return View();
             }
-
-
-            return View();
         }
 
         // POST: EstadoViewModels/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Nome,Sigla,NomePais")] EstadoViewModel estadoViewModel)
+        public ActionResult Create([Bind(Include = "Nome,Sigla,Id_Pais")] EstadoViewModel estadoViewModel)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    estadoViewModel.Id = Guid.NewGuid();
                     Estado estado = new Estado();
                     estado = Mapper.Map<Estado>(estadoViewModel);
+                    estado.Id = Guid.NewGuid();
+                    estado.TimesTamp = DateTime.Now;
                     uow.EstadoRepositorio.Adcionar(estado);
                     uow.Commit();
                     TempData["mensagem"] = string.Format("Estado {0} cadastrado com Sucesso!", estado.Nome);
@@ -118,7 +135,7 @@ namespace AgiliFood.Controllers
         // POST: EstadoViewModels/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Nome,Sigla,NomePais")] EstadoViewModel estadoViewModel)
+        public ActionResult Edit([Bind(Include = "Id,Nome,Sigla, Id_Pais")] EstadoViewModel estadoViewModel)
         {
             if (ModelState.IsValid)
             {

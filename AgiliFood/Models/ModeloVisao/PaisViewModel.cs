@@ -6,6 +6,11 @@ namespace AgiliFood.Models.ModeloVisao
     /// <summary>
     /// Classe responsavel por representar os campos da view pais
     /// </summary>
+    /// <remarks>
+    /// Alteração: Adicionado Display para a propriedade TimesTamp como Ultima alteração
+    /// Autor:  Luiz Fernando
+    /// Data:   30/04/2019
+    /// </remarks>
     public class PaisViewModel
     {
         public Guid Id { get; set; }
@@ -20,6 +25,7 @@ namespace AgiliFood.Models.ModeloVisao
         public string Nome { get; set; }
 
         [Required(ErrorMessage = "TimesTamp é Obrigatória!")]
+        [Display(Name = "Ultima Alteração")]
         public DateTime TimesTamp { get; set; }
 
     }

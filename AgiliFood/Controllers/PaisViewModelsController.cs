@@ -5,9 +5,20 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Web.Mvc;
+using System.Linq;
+using PagedList;
 
 namespace AgiliFood.Controllers
 {
+    /// <summary>
+    /// Modificado controller para somente ser acessada por administradores do sistema
+    /// </summary>
+    /// <remarks>
+    /// Autor:  Luiz Fernando
+    /// Data:   30/04/2019
+    /// </remarks>
+
+    [Authorize(Roles = "Administrador")]
     public class PaisViewModelsController : Controller
     {
         #region propriedades
@@ -28,25 +39,46 @@ namespace AgiliFood.Controllers
 
         #region Metodos publicos
         // GET: PaisViewModels
-        public ActionResult Index()
+        public ActionResult Index(int? pagina)
         {
-            var paises = Mapper.Map<IEnumerable<PaisViewModel>>(uow.PaisRepositorio.GetTudo());
-            return View(paises);
+            try
+            {
+                IEnumerable<PaisViewModel> lista = Mapper.Map<IEnumerable<PaisViewModel>>(uow.PaisRepositorio.GetTudo());
+                lista = lista.OrderBy(x => x.Nome);
+                return View(lista.ToList().ToPagedList(pagina ?? 1, 10));
+            }
+            catch (Exception ex)
+            {
+                TempData["mensagem"] = string.Format("Ocorreu um Erro na Busca de Países:\n {0}", ex.Message);
+                return View();
+            }
+
+
         }
 
         // GET: PaisViewModels/Details/5
         public ActionResult Details(Guid? id)
         {
+            PaisViewModel paisViewModel = null;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PaisViewModel paisViewModel = Mapper.Map<PaisViewModel>(uow.PaisRepositorio.Get(pais => pais.Id == id));
-            if (paisViewModel == null)
+
+            try
             {
-                return HttpNotFound();
+                paisViewModel = Mapper.Map<PaisViewModel>(uow.PaisRepositorio.Get(pais => pais.Id == id));
+                return View(paisViewModel);
             }
-            return View(paisViewModel);
+            catch (Exception ex)
+            {
+                if (paisViewModel == null)
+                {
+                    return HttpNotFound();
+                }
+                ModelState.AddModelError("", string.Format("Ocorreu um Erro na Busca do Pais com Id = {0}\n Erro: {1}", id, ex.Message));
+                return View(paisViewModel);
+            }
         }
 
         // GET: PaisViewModels/Create
@@ -57,7 +89,7 @@ namespace AgiliFood.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Codigo,Nome,TimesTamp")] PaisViewModel paisViewModel)
+        public ActionResult Create([Bind(Include = "Id,Codigo,Nome")] PaisViewModel paisViewModel)
         {
             if (ModelState.IsValid)
             {
@@ -66,6 +98,7 @@ namespace AgiliFood.Controllers
                     paisViewModel.Id = Guid.NewGuid();
                     Pais pais = new Pais();
                     pais = Mapper.Map<Pais>(paisViewModel);
+                    pais.TimesTamp = DateTime.Now;
                     uow.PaisRepositorio.Adcionar(pais);
                     uow.Commit();
                     TempData["mensagem"] = string.Format("{0} : Foi Incluido com Sucesso", pais.Nome);
@@ -73,7 +106,7 @@ namespace AgiliFood.Controllers
                 }
                 catch (Exception ex)
                 {
-                    TempData["mensagem"] = string.Format("Erro ao Cadastrar Pais:\n {0}", ex.Message);
+                    ModelState.AddModelError("", string.Format("Erro ao Cadastrar Pais:\n {0}", ex.Message));
                     IEnumerable<PaisViewModel> lista = Mapper.Map<IEnumerable<PaisViewModel>>(uow.PaisRepositorio.GetTudo());
                     ViewBag.ListaPais = lista;
                     return View();
@@ -99,7 +132,7 @@ namespace AgiliFood.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Codigo,Nome,TimesTamp")] PaisViewModel paisViewModel)
+        public ActionResult Edit([Bind(Include = "Id,Codigo,Nome")] PaisViewModel paisViewModel)
         {
             if (ModelState.IsValid)
             {
@@ -127,16 +160,26 @@ namespace AgiliFood.Controllers
         // GET: PaisViewModels/Delete/5
         public ActionResult Delete(Guid? id)
         {
+            PaisViewModel paisViewModel = null;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PaisViewModel paisViewModel = Mapper.Map<PaisViewModel>(uow.PaisRepositorio.Get(pais => pais.Id == id));
-            if (paisViewModel == null)
+
+            try
             {
-                return HttpNotFound();
+                paisViewModel = Mapper.Map<PaisViewModel>(uow.PaisRepositorio.Get(pais => pais.Id == id));
+                return View(paisViewModel);
             }
-            return View(paisViewModel);
+            catch (Exception ex)
+            {
+                if (paisViewModel == null)
+                {
+                    return HttpNotFound();
+                }
+                ModelState.AddModelError("", string.Format("Ocorreu um Erro na Busca do Pais com Id = {0}\n Erro: {1}", id, ex.Message));
+                return View(paisViewModel);
+            }
         }
 
         // POST: PaisViewModels/Delete/5
@@ -154,7 +197,7 @@ namespace AgiliFood.Controllers
             }
             catch (Exception ex)
             {
-                TempData["mensagem"] = string.Format("Não Foi Possivel deletar o pais:\n {0}", ex.Message);
+                ModelState.AddModelError("", string.Format("Não Foi Possivel deletar o pais:\n {0}", ex.Message));
                 return View();
             }
 

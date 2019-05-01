@@ -1,13 +1,11 @@
 ﻿@model AgiliFood.Models.ModeloVisao.EstadoViewModel
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalhes";
 }
 
-<h2>Details</h2>
-
 <div>
-    <h4>EstadoViewModel</h4>
+    <h4>Detalhes do Estado @Html.DisplayFor(model => model.Nome)</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -27,7 +25,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.NomePais)
+            @Html.DisplayNameFor(model => model.Id_Pais)
         </dt>
 
         <dd>
@@ -37,6 +35,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Alterar", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Retornar Para Lista de Estados", "Index")
 </p>

@@ -15,12 +15,12 @@ namespace AgiliFood.AutoMapper
     {
         public AutoMapperProfile()
         {
-            CreateMap<PaisViewModel, Pais>();
+            CreateMap<PaisViewModel, Pais>().PreserveReferences();
             CreateMap<CardapioViewModel, Cardapio>();
             CreateMap<CepViewModel, Cep>();
             CreateMap<CidadeViewModel, Cidade>();
             CreateMap<ContasReceberViewModel, ContasReceber>();
-            CreateMap<EstadoViewModel, Estado>();
+            CreateMap<EstadoViewModel, Estado>().PreserveReferences();
             CreateMap<FornecedorViewModel, Fornecedor>();
             CreateMap<FuncionarioViewModel, Funcionario>();
             CreateMap<ItensCardapioViewModel, ItensCardapio>();

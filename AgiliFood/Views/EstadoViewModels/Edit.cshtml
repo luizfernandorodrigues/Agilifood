@@ -1,10 +1,8 @@
 ﻿@model AgiliFood.Models.ModeloVisao.EstadoViewModel
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Alterar";
 }
-
-<h2>Edit</h2>
 
 
 @using (Html.BeginForm())
@@ -12,7 +10,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>EstadoViewModel</h4>
+        <h4>Alterar @Html.DisplayFor(model => model.Nome)</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
@@ -34,23 +32,23 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.NomePais, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Id_Pais, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.NomePais, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NomePais, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Id_Pais, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Id_Pais, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Salvar" class="btn btn-primary" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Retornar Para Lista de Estados", "Index")
 </div>
 
 @section Scripts {

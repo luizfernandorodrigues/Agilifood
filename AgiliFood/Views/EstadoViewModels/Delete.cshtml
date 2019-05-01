@@ -1,12 +1,13 @@
 ﻿@model AgiliFood.Models.ModeloVisao.EstadoViewModel
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Escluir";
 }
 
-<h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h2>Excluir</h2>
+
+<h3>Tem Certeza que Deseja Excluir Este Registro ?</h3>
 <div>
     <h4>EstadoViewModel</h4>
     <hr />
@@ -28,21 +29,22 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.NomePais)
+            @Html.DisplayNameFor(model => model.Id_Pais)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.NomePais)
+            @Html.DisplayFor(model => model.Id_Pais)
         </dd>
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Excluir" class="btn btn-danger" /> |
+            @Html.ActionLink("Retornar Para Lista de Estados", "Index")
         </div>
     }
 </div>
