@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace AgiliFood.Models.ModeloVisao
@@ -26,6 +26,9 @@ namespace AgiliFood.Models.ModeloVisao
         public Guid Id_Pais { get; set; }
 
         public string NomePais { get; set; }
-        public Pais Pais { get; set; }
+
+        public virtual PaisViewModel Pais { get; set; }
+
+        public virtual IEnumerable<CidadeViewModel> Cidades { get; set; }
     }
 }

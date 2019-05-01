@@ -3,42 +3,35 @@ using AgiliFood.Models.ModeloVisao;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 
 namespace AgiliFood.Controllers
 {
+    [Authorize(Roles = "Administrador")]
     public class CidadeViewModelsController : Controller
     {
-        #region Propriedades
-        private readonly UnitOfWork.UnitOfWork uow;
-        #endregion
-
-        #region Construtores
-        public CidadeViewModelsController()
-        {
-            uow = new UnitOfWork.UnitOfWork();
-        }
-        public CidadeViewModelsController(UnitOfWork.UnitOfWork unitOfWork)
-        {
-            uow = unitOfWork;
-        }
-        #endregion;
 
         #region Metodos Publicos Actions
         // GET: CidadeViewModels
         public ActionResult Index()
         {
-            try
+            IEnumerable<CidadeViewModel> lista = null;
+            using (UnitOfWork.UnitOfWork uow = new UnitOfWork.UnitOfWork())
             {
-                IEnumerable<CidadeViewModel> lista = Mapper.Map<IEnumerable<CidadeViewModel>>(uow.CidadeRepositorio.GetTudo());
-                return View(lista);
+                try
+                {
+                    lista = Mapper.Map<IEnumerable<CidadeViewModel>>(uow.CidadeRepositorio.GetTudo().ToList());
+                }
+                catch (Exception ex)
+                {
+                    TempData["mensagem"] = string.Format("Ocorreu um erro na busca!\n {0}", ex.Message);
+                    return View();
+                }
             }
-            catch (Exception ex)
-            {
-                TempData["mensagem"] = string.Format("Ocorreu um erro na busca!\n {0}", ex.Message);
-                return View();
-            }
+            return View(lista);
+
         }
 
         // GET: CidadeViewModels/Details/5
@@ -50,49 +43,69 @@ namespace AgiliFood.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            try
+            using (UnitOfWork.UnitOfWork uow = new UnitOfWork.UnitOfWork())
             {
-                cidadeViewModel = Mapper.Map<CidadeViewModel>(uow.CidadeRepositorio.Get(x => x.Id == id));
-                return View(cidadeViewModel);
-            }
-            catch (Exception ex)
-            {
-                TempData["mensagem"] = string.Format("Ocorreu um Erro! \n {0}", ex.Message);
-                if (cidadeViewModel == null)
+                try
                 {
-                    return HttpNotFound();
+                    cidadeViewModel = Mapper.Map<CidadeViewModel>(uow.CidadeRepositorio.Get(x => x.Id == id));
+                    return View(cidadeViewModel);
                 }
-                return View(cidadeViewModel);
+                catch (Exception ex)
+                {
+                    TempData["mensagem"] = string.Format("Ocorreu um Erro! \n {0}", ex.Message);
+                    if (cidadeViewModel == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(cidadeViewModel);
+                }
             }
         }
 
         // GET: CidadeViewModels/Create
         public ActionResult Create()
         {
-            return View();
+            using (UnitOfWork.UnitOfWork uow = new UnitOfWork.UnitOfWork())
+            {
+                try
+                {
+                    List<EstadoViewModel> lista = Mapper.Map<List<EstadoViewModel>>(uow.EstadoRepositorio.GetTudo().ToList());
+                    ViewBag.EstadoLista = lista;
+                    return View();
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", string.Format("Ocorreu um Erro na Busca dos Estados:\n {0}", ex.Message));
+                    return View();
+                }
+            }
         }
 
         // POST: CidadeViewModels/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Nome,NomeEstado")] CidadeViewModel cidadeViewModel)
+        public ActionResult Create([Bind(Include = "Id,Nome,Id_Estado")] CidadeViewModel cidadeViewModel)
         {
             if (ModelState.IsValid)
             {
-                try
+                using (UnitOfWork.UnitOfWork uow = new UnitOfWork.UnitOfWork())
                 {
-                    Cidade cidade = new Cidade();
-                    cidadeViewModel.Id = Guid.NewGuid();
-                    cidade = Mapper.Map<Cidade>(cidadeViewModel);
-                    uow.CidadeRepositorio.Adcionar(cidade);
-                    uow.Commit();
-                    TempData["mensagem"] = string.Format("Registro Cadastrado com Sucesso!");
-                    return RedirectToAction("Index");
-                }
-                catch (Exception ex)
-                {
-                    TempData["mensagem"] = string.Format("Não Foi Possivel Gravar o Registro!\n {0}", ex.Message);
-                    return View();
+                    try
+                    {
+                        Cidade cidade = new Cidade();
+                        cidade = Mapper.Map<Cidade>(cidadeViewModel);
+                        cidade.Id = Guid.NewGuid();
+                        cidade.TimesTamp = DateTime.Now;
+                        uow.CidadeRepositorio.Adcionar(cidade);
+                        uow.Commit();
+                        TempData["mensagem"] = string.Format("Registro Cadastrado com Sucesso!");
+                        return RedirectToAction("Index");
+                    }
+                    catch (Exception ex)
+                    {
+                        TempData["mensagem"] = string.Format("Não Foi Possivel Gravar o Registro!\n {0}", ex.Message);
+                        return View();
+                    }
                 }
             }
             return View(cidadeViewModel);
@@ -108,42 +121,51 @@ namespace AgiliFood.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            try
+            using (UnitOfWork.UnitOfWork uow = new UnitOfWork.UnitOfWork())
             {
-                cidadeViewModel = Mapper.Map<CidadeViewModel>(uow.CidadeRepositorio.Get(x => x.Id == id));
-                return View(cidadeViewModel);
-            }
-            catch (Exception ex)
-            {
-                TempData["mensagem"] = string.Format("Ocorreu um erro!\n {0}", ex.Message);
-                if (cidadeViewModel == null)
+                try
                 {
-                    return HttpNotFound();
+                    cidadeViewModel = Mapper.Map<CidadeViewModel>(uow.CidadeRepositorio.Get(x => x.Id == id));
+                    List<EstadoViewModel> lista = Mapper.Map<List<EstadoViewModel>>(uow.EstadoRepositorio.GetTudo().ToList());
+                    ViewBag.EstadoLista = lista;
+                    return View(cidadeViewModel);
                 }
-                return View(cidadeViewModel);
+                catch (Exception ex)
+                {
+                    TempData["mensagem"] = string.Format("Ocorreu um erro!\n {0}", ex.Message);
+                    if (cidadeViewModel == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(cidadeViewModel);
+                }
             }
         }
 
         // POST: CidadeViewModels/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Nome,NomeEstado")] CidadeViewModel cidadeViewModel)
+        public ActionResult Edit([Bind(Include = "Id,Nome,Id_Estado")] CidadeViewModel cidadeViewModel)
         {
             if (ModelState.IsValid)
             {
-                try
+                using (UnitOfWork.UnitOfWork uow = new UnitOfWork.UnitOfWork())
                 {
-                    Cidade cidade = new Cidade();
-                    cidade = Mapper.Map<Cidade>(cidadeViewModel);
-                    uow.CidadeRepositorio.Atualizar(cidade);
-                    uow.Commit();
-                    TempData["mensagem"] = string.Format("Registro Alterado Com Sucesso!");
-                    return RedirectToAction("Index");
-                }
-                catch (Exception ex)
-                {
-                    TempData["mensagem"] = string.Format("Ocorreu ao Alterar o Registro!\n {0}", ex.Message);
-                    return RedirectToAction("Index");
+                    try
+                    {
+                        Cidade cidade = new Cidade();
+                        cidade = Mapper.Map<Cidade>(cidadeViewModel);
+                        cidade.TimesTamp = DateTime.Now;
+                        uow.CidadeRepositorio.Atualizar(cidade);
+                        uow.Commit();
+                        TempData["mensagem"] = string.Format("Registro Alterado Com Sucesso!");
+                        return RedirectToAction("Index");
+                    }
+                    catch (Exception ex)
+                    {
+                        TempData["mensagem"] = string.Format("Ocorreu ao Alterar o Registro!\n {0}", ex.Message);
+                        return RedirectToAction("Index");
+                    }
                 }
             }
             return View(cidadeViewModel);
@@ -158,19 +180,22 @@ namespace AgiliFood.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            try
+            using (UnitOfWork.UnitOfWork uow = new UnitOfWork.UnitOfWork())
             {
-                cidadeViewModel = Mapper.Map<CidadeViewModel>(uow.CidadeRepositorio.Get(x => x.Id == id));
-                return View(cidadeViewModel);
-            }
-            catch (Exception ex)
-            {
-                TempData["mensagem"] = string.Format("Ocorreu um erro!\n {0}", ex.Message);
-                if (cidadeViewModel == null)
+                try
                 {
-                    return HttpNotFound();
+                    cidadeViewModel = Mapper.Map<CidadeViewModel>(uow.CidadeRepositorio.Get(x => x.Id == id));
+                    return View(cidadeViewModel);
                 }
-                return View(cidadeViewModel);
+                catch (Exception ex)
+                {
+                    TempData["mensagem"] = string.Format("Ocorreu um erro!\n {0}", ex.Message);
+                    if (cidadeViewModel == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(cidadeViewModel);
+                }
             }
         }
 
@@ -179,20 +204,24 @@ namespace AgiliFood.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            try
+            using (UnitOfWork.UnitOfWork uow = new UnitOfWork.UnitOfWork())
             {
-                Cidade cidade = new Cidade();
-                cidade = uow.CidadeRepositorio.Get(x => x.Id == id);
-                uow.CidadeRepositorio.Deletar(cidade);
-                uow.Commit();
-                TempData["mensagem"] = string.Format("Registro Excluido com sucesso");
-                return RedirectToAction("Index");
+                try
+                {
+                    Cidade cidade = new Cidade();
+                    cidade = uow.CidadeRepositorio.Get(x => x.Id == id);
+                    uow.CidadeRepositorio.Deletar(cidade);
+                    uow.Commit();
+                    TempData["mensagem"] = string.Format("Registro Excluido com sucesso");
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    TempData["mensagem"] = string.Format("Ocorreu um Erro ao excluir o registro!\n {0}", ex.Message);
+                    return RedirectToAction("Index");
+                }
             }
-            catch (Exception ex)
-            {
-                TempData["mensagem"] = string.Format("Ocorreu um Erro ao excluir o registro!\n {0}", ex.Message);
-                return RedirectToAction("Index");
-            }
+
         }
         #endregion
     }

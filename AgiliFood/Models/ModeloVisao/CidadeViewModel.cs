@@ -20,6 +20,9 @@ namespace AgiliFood.Models.ModeloVisao
         [Display(Name = "Nome")]
         [Required(ErrorMessage = "Nome da cidade é obrigatório!"), MaxLength(100, ErrorMessage = "Nome da cidade deve conter no maximo 100 caracteres")]
         public string Nome { get; set; }
-        public string NomeEstado { get; set; }
+        [Display(Name = "Estado")]
+        public string Id_Estado { get; set; }
+        public virtual EstadoViewModel Estado { get; set; }
+        public virtual IEnumerable<CepViewModel> Cep { get; set; }
     }
 }

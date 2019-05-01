@@ -190,6 +190,18 @@
     <Compile Include="Migrations\201904260155532_drop_coluna_dataCadastro.Designer.cs">
       <DependentUpon>201904260155532_drop_coluna_dataCadastro.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905011613185_teste.cs" />
+    <Compile Include="Migrations\201905011613185_teste.Designer.cs">
+      <DependentUpon>201905011613185_teste.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905011715000_modificações.cs" />
+    <Compile Include="Migrations\201905011715000_modificações.Designer.cs">
+      <DependentUpon>201905011715000_modificações.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905011728510_teste1.cs" />
+    <Compile Include="Migrations\201905011728510_teste1.Designer.cs">
+      <DependentUpon>201905011728510_teste1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Dominio\Cardapio.cs" />
     <Compile Include="Models\Dominio\Cep.cs" />
@@ -379,6 +391,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904260155532_drop_coluna_dataCadastro.resx">
       <DependentUpon>201904260155532_drop_coluna_dataCadastro.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905011613185_teste.resx">
+      <DependentUpon>201905011613185_teste.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905011715000_modificações.resx">
+      <DependentUpon>201905011715000_modificações.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905011728510_teste1.resx">
+      <DependentUpon>201905011728510_teste1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

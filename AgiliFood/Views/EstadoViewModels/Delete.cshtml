@@ -1,15 +1,11 @@
 ﻿@model AgiliFood.Models.ModeloVisao.EstadoViewModel
 
 @{
-    ViewBag.Title = "Escluir";
+    ViewBag.Title = "Excluir";
 }
-
-
-<h2>Excluir</h2>
 
 <h3>Tem Certeza que Deseja Excluir Este Registro ?</h3>
 <div>
-    <h4>EstadoViewModel</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -33,7 +29,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Id_Pais)
+            @Html.DisplayFor(model => model.Pais.Nome)
         </dd>
 
     </dl>

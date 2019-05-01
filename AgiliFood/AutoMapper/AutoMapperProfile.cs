@@ -10,23 +10,52 @@ namespace AgiliFood.AutoMapper
     /// <remarks>
     /// Autor:  Luiz Fernando
     /// Data:   23/04/2019
+    /// 
+    /// Alteração: Adicionado o mapeamento inverso do domain para a viewModel
+    /// Autor:  Luiz Fernando
+    /// Data:   01/05/2019
     /// </remarks>
     public class AutoMapperProfile : Profile
     {
         public AutoMapperProfile()
         {
-            CreateMap<PaisViewModel, Pais>().PreserveReferences();
+            CreateMap<PaisViewModel, Pais>();
+            CreateMap<Pais, PaisViewModel>();
+
             CreateMap<CardapioViewModel, Cardapio>();
+            CreateMap<Cardapio, CardapioViewModel>();
+
             CreateMap<CepViewModel, Cep>();
+            CreateMap<Cep, CepViewModel>();
+
             CreateMap<CidadeViewModel, Cidade>();
+            CreateMap<Cidade, CidadeViewModel>();
+
             CreateMap<ContasReceberViewModel, ContasReceber>();
-            CreateMap<EstadoViewModel, Estado>().PreserveReferences();
+            CreateMap<ContasReceber, ContasReceberViewModel>();
+
+            CreateMap<EstadoViewModel, Estado>();
+            CreateMap<Estado, EstadoViewModel>();
+
             CreateMap<FornecedorViewModel, Fornecedor>();
+            CreateMap<Fornecedor, FornecedorViewModel>();
+
             CreateMap<FuncionarioViewModel, Funcionario>();
+            CreateMap<Funcionario, FuncionarioViewModel>();
+
             CreateMap<ItensCardapioViewModel, ItensCardapio>();
+            CreateMap<ItensCardapio, ItensCardapioViewModel>();
+
             CreateMap<ItensPedidoViewModel, ItensPedido>();
+            CreateMap<ItensPedido, ItensPedidoViewModel>();
+
             CreateMap<PedidoViewModel, Pedido>();
+            CreateMap<Pedido, PedidoViewModel>();
+
             CreateMap<ProdutoViewModel, Produto>();
+            CreateMap<Produto, ProdutoViewModel>();
+
+            CreateMap<Usuario, UsuarioViewModel>();
             CreateMap<UsuarioViewModel, Usuario>();
         }
     }

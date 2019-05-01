@@ -2,11 +2,14 @@
 using AgiliFood.Models.ModeloVisao;
 using AutoMapper;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 
 namespace AgiliFood.Controllers
 {
+    [Authorize]
     public class CepViewModelsController : Controller
     {
         #region Propriedades
@@ -31,7 +34,7 @@ namespace AgiliFood.Controllers
         {
             try
             {
-                IEquatable<CepViewModel> lista = Mapper.Map<IEquatable<CepViewModel>>(uow.CepRepositorio.GetTudo());
+                IEnumerable<CepViewModel> lista = Mapper.Map<IEnumerable<CepViewModel>>(uow.CepRepositorio.GetTudo().ToList());
                 return View(lista);
             }
             catch (Exception ex)
@@ -69,20 +72,32 @@ namespace AgiliFood.Controllers
         // GET: CepViewModels/Create
         public ActionResult Create()
         {
-            return View();
+            try
+            {
+                IEnumerable<CidadeViewModel> lista = Mapper.Map<IEnumerable<CidadeViewModel>>(uow.CidadeRepositorio.GetTudo().ToList());
+                ViewBag.CidadeLista = lista;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                TempData["mensagem"] = string.Format("Ocorreu um Erro Na busca De Cidades\n {0}", ex.Message);
+                return View();
+            }
+
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Cep,NomeCidade")] CepViewModel cepViewModel)
+        public ActionResult Create([Bind(Include = "Id,_Cep,Id_Cidade")] CepViewModel cepViewModel)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
                     Cep cep = new Cep();
-                    cepViewModel.Id = Guid.NewGuid();
                     cep = Mapper.Map<Cep>(cepViewModel);
+                    cep.Id = Guid.NewGuid();
+                    cep.TimesTamp = DateTime.Now;
                     uow.CepRepositorio.Adcionar(cep);
                     uow.Commit();
                     TempData["mensagem"] = string.Format("Registro Cadastrado com Sucesso!");
@@ -110,6 +125,8 @@ namespace AgiliFood.Controllers
             try
             {
                 cepViewModel = Mapper.Map<CepViewModel>(uow.CepRepositorio.Get(x => x.Id == id));
+                IEnumerable<CidadeViewModel> lista = Mapper.Map<IEnumerable<CidadeViewModel>>(uow.CidadeRepositorio.GetTudo().ToList());
+                ViewBag.CidadeLista = lista;
                 return View(cepViewModel);
             }
             catch (Exception ex)
@@ -125,7 +142,7 @@ namespace AgiliFood.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Cep,NomeCidade")] CepViewModel cepViewModel)
+        public ActionResult Edit([Bind(Include = "Id,_Cep,Id_Cidade")] CepViewModel cepViewModel)
         {
             if (ModelState.IsValid)
             {
@@ -133,6 +150,7 @@ namespace AgiliFood.Controllers
                 {
                     Cep cep = new Cep();
                     cep = Mapper.Map<Cep>(cepViewModel);
+                    cep.TimesTamp = DateTime.Now;
                     uow.CepRepositorio.Atualizar(cep);
                     uow.Commit();
                     TempData["mensagem"] = string.Format("Registro Alterado Com Sucesso!");

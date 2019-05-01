@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace AgiliFood.Models
 {
@@ -9,6 +10,8 @@ namespace AgiliFood.Models
         public string Sigla { get; set; }
         public DateTime TimesTamp { get; set; }
         public Guid Id_Pais { get; set; }
-        public Pais Pais { get; set; }
+        public virtual Pais Pais { get; set; }
+
+        public virtual IEnumerable<Cidade> Cidades { get; set; }
     }
 }

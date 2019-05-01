@@ -35,8 +35,8 @@ namespace AgiliFood.Controllers
         {
             try
             {
-                IEnumerable<Estado> lst = uow.EstadoRepositorio.GetTudo();
-                return View(lst);
+                IEnumerable<EstadoViewModel> lista = Mapper.Map<IEnumerable<EstadoViewModel>>(uow.EstadoRepositorio.GetTudo().ToList());
+                return View(lista);
             }
             catch (Exception ex)
             {
@@ -56,9 +56,6 @@ namespace AgiliFood.Controllers
             try
             {
                 estadoViewModel = Mapper.Map<EstadoViewModel>(uow.EstadoRepositorio.Get(x => x.Id == id));
-                Pais pais = new Pais();
-                pais = uow.PaisRepositorio.Get(x => x.Id == estadoViewModel.Id_Pais);
-                estadoViewModel.NomePais = pais.Nome;
                 return View(estadoViewModel);
             }
             catch (Exception ex)
@@ -120,16 +117,28 @@ namespace AgiliFood.Controllers
         // GET: EstadoViewModels/Edit/5
         public ActionResult Edit(Guid? id)
         {
+            EstadoViewModel estadoViewModel = null;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            EstadoViewModel estadoViewModel = Mapper.Map<EstadoViewModel>(uow.EstadoRepositorio.Get(x => x.Id == id));
-            if (estadoViewModel == null)
+
+            try
             {
-                return HttpNotFound();
+                estadoViewModel = Mapper.Map<EstadoViewModel>(uow.EstadoRepositorio.Get(x => x.Id == id));
+                List<PaisViewModel> listaPais = Mapper.Map<List<PaisViewModel>>(uow.PaisRepositorio.GetTudo());
+                ViewBag.PaisLista = listaPais;
+                return View(estadoViewModel);
             }
-            return View(estadoViewModel);
+            catch (Exception ex)
+            {
+                if (estadoViewModel == null)
+                {
+                    return HttpNotFound();
+                }
+                TempData["mensagem"] = string.Format("Ocorreu um Erro ao Buscar os Paises\\Estados! \n {0}", ex.Message);
+                return View();
+            }
         }
 
         // POST: EstadoViewModels/Edit/5

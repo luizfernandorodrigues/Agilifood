@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<AgiliFood.Models.ModeloVisao.CidadeViewModel>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Cidades";
 }
 
-<h2>Index</h2>
+<h2>Cidades</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Adicionar Novo", "Create")
 </p>
 <table class="table">
     <tr>
@@ -15,7 +15,7 @@
             @Html.DisplayNameFor(model => model.Nome)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.NomeEstado)
+            @Html.DisplayNameFor(model => model.Id_Estado)
         </th>
         <th></th>
     </tr>
@@ -26,12 +26,12 @@
             @Html.DisplayFor(modelItem => item.Nome)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.NomeEstado)
+            @Html.DisplayFor(modelItem => item.Estado.Nome)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Alterar", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Detalhes", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Excluir", "Delete", new { id=item.Id })
         </td>
     </tr>
 }

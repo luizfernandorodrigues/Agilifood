@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace AgiliFood.Models.ModeloVisao
@@ -17,7 +18,11 @@ namespace AgiliFood.Models.ModeloVisao
 
         [Display(Name = "Cep")]
         [Required(ErrorMessage = "O Cep é Obrigatório"), MaxLength(8, ErrorMessage = "Campo Cep deve conter no máximo 8 caracteres")]
-        public string Cep { get; set; }
-        public string NomeCidade { get; set; }
+        public string _Cep { get; set; }
+        [Display(Name = "Cidade")]
+        public string Id_Cidade { get; set; }
+        public virtual CidadeViewModel Cidade { get; set; }
+        public virtual IEnumerable<FuncionarioViewModel> Funcionario { get; set; }
+        public virtual IEnumerable<FornecedorViewModel> Fornecedor { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace AgiliFood.Models.ModeloVisao
@@ -27,6 +28,8 @@ namespace AgiliFood.Models.ModeloVisao
         [Required(ErrorMessage = "TimesTamp é Obrigatória!")]
         [Display(Name = "Ultima Alteração")]
         public DateTime TimesTamp { get; set; }
+
+        public virtual IEnumerable<EstadoViewModel> Estados { get; set; }
 
     }
 }
