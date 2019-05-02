@@ -41,6 +41,10 @@ namespace AgiliFood.Controllers
                 TempData["mensagem"] = string.Format("Ocorreu um erro na busca!\n {0}", ex.Message);
                 return View();
             }
+            finally
+            {
+                uow.Dispose();
+            }
         }
 
         // GET: CardapioViewModels/Details/5
@@ -64,6 +68,10 @@ namespace AgiliFood.Controllers
                     return HttpNotFound();
                 }
                 return View(cardapioViewModel);
+            }
+            finally
+            {
+                uow.Dispose();
             }
 
         }
@@ -97,6 +105,10 @@ namespace AgiliFood.Controllers
                 {
                     TempData["mensagem"] = string.Format("Ocorreu um erro ao Gravar o Registro!\n {0}", ex.Message);
                 }
+                finally
+                {
+                    uow.Dispose();
+                }
 
             }
             return View(cardapioViewModel);
@@ -124,6 +136,10 @@ namespace AgiliFood.Controllers
                 }
                 return View(cardapioViewModel);
             }
+            finally
+            {
+                uow.Dispose();
+            }
         }
 
         [HttpPost]
@@ -144,6 +160,10 @@ namespace AgiliFood.Controllers
                 catch (Exception ex)
                 {
                     TempData["mensagem"] = string.Format("Ocorreu um Erro ao Atualizar o Registro!\n {0}", ex.Message);
+                }
+                finally
+                {
+                    uow.Dispose();
                 }
             }
             return View(cardapioViewModel);
@@ -171,6 +191,10 @@ namespace AgiliFood.Controllers
                 }
                 return View(cardapioViewModel);
             }
+            finally
+            {
+                uow.Dispose();
+            }
 
         }
 
@@ -191,6 +215,10 @@ namespace AgiliFood.Controllers
             {
                 TempData["mensagem"] = string.Format("Ocorreu um Erro ao excluir o Registro!\n {0}", ex.Message);
                 return RedirectToAction("Index");
+            }
+            finally
+            {
+                uow.Dispose();
             }
         }
         #endregion

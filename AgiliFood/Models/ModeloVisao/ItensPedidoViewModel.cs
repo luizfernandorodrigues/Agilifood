@@ -24,5 +24,7 @@ namespace AgiliFood.Models.ModeloVisao
 
         [Required(ErrorMessage = "Pedido é Obrigatória!")]
         public Guid Id_Pedido { get; set; }
+        public virtual PedidoViewModel Pedido { get; set; }
+        
     }
 }

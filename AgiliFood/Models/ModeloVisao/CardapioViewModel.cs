@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 namespace AgiliFood.Models.ModeloVisao
 {
@@ -28,6 +29,10 @@ namespace AgiliFood.Models.ModeloVisao
         [Required(ErrorMessage = "Fornecedor é Obrigatório!")]
         public Guid Id_Fornecedor { get; set; }
 
-        public string NomeFornecedor { get; set; }
+        public virtual FornecedorViewModel Fornecedor { get; set; }
+
+        public virtual IEnumerable<ItensCardapioViewModel> ItensCardapio { get; set; }
+        public virtual IEnumerable<PedidoViewModel> Pedidos { get; set; }
+
     }
 }

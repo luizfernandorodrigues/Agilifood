@@ -67,6 +67,10 @@ namespace AgiliFood.Controllers
                 }
                 return View(cepViewModel);
             }
+            finally
+            {
+                uow.Dispose();
+            }
         }
 
         // GET: CepViewModels/Create

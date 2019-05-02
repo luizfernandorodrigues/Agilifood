@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace AgiliFood.Models.ModeloVisao
@@ -28,6 +29,8 @@ namespace AgiliFood.Models.ModeloVisao
 
         [Required(ErrorMessage = "Cardapio é Obrigatória!")]
         public Guid Id_Cardapio { get; set; }
-        public string DescricaoCardapio { get; set; }
+        public virtual CardapioViewModel Cardapio { get; set; }
+
+        public virtual IEnumerable<ItensPedidoViewModel> ItensPedido { get; set; }
     }
 }

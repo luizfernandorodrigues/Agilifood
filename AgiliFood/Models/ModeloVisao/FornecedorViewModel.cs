@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace AgiliFood.Models.ModeloVisao
@@ -56,7 +57,9 @@ namespace AgiliFood.Models.ModeloVisao
 
         [Required(ErrorMessage = "Cep é Obrigatório!")]
         public Guid Id_Cep { get; set; }
-        public string Cep { get; set; }
+        public virtual CepViewModel Cep { get; set; }
+        public virtual IEnumerable<CardapioViewModel> Cardapio { get; set; }
+
 
     }
 }

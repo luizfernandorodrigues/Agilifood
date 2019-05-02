@@ -43,6 +43,10 @@ namespace AgiliFood.Controllers
                 ModelState.AddModelError("", string.Format("Ocorreu um Erro na Busca dos Estados:\n {0}", ex.Message));
                 return View();
             }
+            finally
+            {
+                uow.Dispose();
+            }
         }
 
         // GET: EstadoViewModels/Details/5
@@ -66,6 +70,10 @@ namespace AgiliFood.Controllers
                     return HttpNotFound();
                 }
             }
+            finally
+            {
+                uow.Dispose();
+            }
             return View(estadoViewModel);
         }
 
@@ -83,6 +91,10 @@ namespace AgiliFood.Controllers
             {
                 TempData["mensagem"] = string.Format("Ocorreu um Erro ao Buscar os Paises! \n {0}", ex.Message);
                 return View();
+            }
+            finally
+            {
+                uow.Dispose();
             }
         }
 
@@ -108,6 +120,10 @@ namespace AgiliFood.Controllers
                 {
                     TempData["mensagem"] = string.Format("Não foi possivel cadastrar o estado: {0}: \n {1}", estadoViewModel.Nome, ex.Message);
                     return View(estadoViewModel);
+                }
+                finally
+                {
+                    uow.Dispose();
                 }
             }
 
@@ -139,6 +155,10 @@ namespace AgiliFood.Controllers
                 TempData["mensagem"] = string.Format("Ocorreu um Erro ao Buscar os Paises\\Estados! \n {0}", ex.Message);
                 return View();
             }
+            finally
+            {
+                uow.Dispose();
+            }
         }
 
         // POST: EstadoViewModels/Edit/5
@@ -162,6 +182,10 @@ namespace AgiliFood.Controllers
                 {
                     TempData["mensagem"] = string.Format("Não Foi Possivel Alterar o Registro {0}: \n {1}", estadoViewModel.Nome, ex.Message);
                     return View(estadoViewModel);
+                }
+                finally
+                {
+                    uow.Dispose();
                 }
             }
             return View(estadoViewModel);
@@ -188,6 +212,10 @@ namespace AgiliFood.Controllers
                     return HttpNotFound();
                 }
             }
+            finally
+            {
+                uow.Dispose();
+            }
             return View(estadoViewModel);
         }
 
@@ -209,6 +237,10 @@ namespace AgiliFood.Controllers
             {
                 TempData["mensagem"] = string.Format("Ocorreu um Erro ao Excluir o registro {0}: \n {1}", estado.Nome, ex.Message);
                 return RedirectToAction("Index");
+            }
+            finally
+            {
+                uow.Dispose();
             }
         }
         #endregion

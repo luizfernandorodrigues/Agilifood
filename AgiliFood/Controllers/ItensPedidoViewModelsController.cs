@@ -38,6 +38,10 @@ namespace AgiliFood.Controllers
                 TempData["mensagem"] = string.Format("Ocorreu um erro!\n {0}", ex.Message);
                 return View();
             }
+            finally
+            {
+                uow.Dispose();
+            }
         }
 
         // GET: ItensPedidoViewModels/Details/5
@@ -62,6 +66,10 @@ namespace AgiliFood.Controllers
                     return HttpNotFound();
                 }
                 return View(itensPedidoViewModel);
+            }
+            finally
+            {
+                uow.Dispose();
             }
         }
 
@@ -93,6 +101,10 @@ namespace AgiliFood.Controllers
                     TempData["mensagem"] = string.Format("Não Foi Possivel Gravar o Registro!\n {0}", ex.Message);
                     return View();
                 }
+                finally
+                {
+                    uow.Dispose();
+                }
             }
             return View(itensPedidoViewModel);
         }
@@ -121,6 +133,10 @@ namespace AgiliFood.Controllers
                 }
                 return View(itensPedidoViewModel);
             }
+            finally
+            {
+                uow.Dispose();
+            }
         }
 
         // POST: ItensPedidoViewModels/Edit/5
@@ -143,6 +159,10 @@ namespace AgiliFood.Controllers
                 {
                     TempData["mensagem"] = string.Format("Ocorreu ao Alterar o Registro!\n {0}", ex.Message);
                     return RedirectToAction("Index");
+                }
+                finally
+                {
+                    uow.Dispose();
                 }
             }
             return View(itensPedidoViewModel);
@@ -171,6 +191,10 @@ namespace AgiliFood.Controllers
                 }
                 return View(itensPedidoViewModel);
             }
+            finally
+            {
+                uow.Dispose();
+            }
         }
 
         // POST: ItensPedidoViewModels/Delete/5
@@ -191,6 +215,10 @@ namespace AgiliFood.Controllers
             {
                 TempData["mensagem"] = string.Format("Ocorreu um Erro ao excluir o registro!\n {0}", ex.Message);
                 return RedirectToAction("Index");
+            }
+            finally
+            {
+                uow.Dispose();
             }
         }
         #endregion

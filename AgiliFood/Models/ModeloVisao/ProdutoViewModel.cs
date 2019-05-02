@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace AgiliFood.Models.ModeloVisao
@@ -34,5 +35,6 @@ namespace AgiliFood.Models.ModeloVisao
         [Display(Name = "Preço")]
         [Required(ErrorMessage = "Preço é Obrigatória!")]
         public decimal Preco { get; set; }
+        public virtual IEnumerable<ItensCardapioViewModel> ItensCardapio { get; set; }
     }
 }

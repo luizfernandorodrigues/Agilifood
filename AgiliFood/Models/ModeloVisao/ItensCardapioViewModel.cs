@@ -19,13 +19,13 @@ namespace AgiliFood.Models.ModeloVisao
         public decimal Valor { get; set; }
 
         [Required(ErrorMessage = "Produto é Obrigatória!")]
+        [Display(Name = "Produto")]
         public Guid Id_Produto { get; set; }
 
-        public string NomeProduto { get; set; }
+        public virtual ProdutoViewModel Produto { get; set; }
 
         [Required(ErrorMessage = "Cardapio é Obrigatória!")]
         public Guid Id_Cardapio { get; set; }
-
-        public string DescricaoCardapio { get; set; }
+        public virtual CardapioViewModel Cardapio { get; set; }
     }
 }

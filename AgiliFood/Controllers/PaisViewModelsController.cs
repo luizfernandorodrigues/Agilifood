@@ -52,6 +52,10 @@ namespace AgiliFood.Controllers
                 TempData["mensagem"] = string.Format("Ocorreu um Erro na Busca de Países:\n {0}", ex.Message);
                 return View();
             }
+            finally
+            {
+                uow.Dispose();
+            }
 
 
         }
@@ -78,6 +82,10 @@ namespace AgiliFood.Controllers
                 }
                 ModelState.AddModelError("", string.Format("Ocorreu um Erro na Busca do Pais com Id = {0}\n Erro: {1}", id, ex.Message));
                 return View(paisViewModel);
+            }
+            finally
+            {
+                uow.Dispose();
             }
         }
 
@@ -110,6 +118,10 @@ namespace AgiliFood.Controllers
                     IEnumerable<PaisViewModel> lista = Mapper.Map<IEnumerable<PaisViewModel>>(uow.PaisRepositorio.GetTudo());
                     ViewBag.ListaPais = lista;
                     return View();
+                }
+                finally
+                {
+                    uow.Dispose();
                 }
             }
             return View(paisViewModel);
@@ -153,6 +165,10 @@ namespace AgiliFood.Controllers
                     ViewBag.ListaPais = lista;
                     return View();
                 }
+                finally
+                {
+                    uow.Dispose();
+                }
             }
             return View(paisViewModel);
         }
@@ -180,6 +196,10 @@ namespace AgiliFood.Controllers
                 ModelState.AddModelError("", string.Format("Ocorreu um Erro na Busca do Pais com Id = {0}\n Erro: {1}", id, ex.Message));
                 return View(paisViewModel);
             }
+            finally
+            {
+                uow.Dispose();
+            }
         }
 
         // POST: PaisViewModels/Delete/5
@@ -199,6 +219,10 @@ namespace AgiliFood.Controllers
             {
                 ModelState.AddModelError("", string.Format("Não Foi Possivel deletar o pais:\n {0}", ex.Message));
                 return View();
+            }
+            finally
+            {
+                uow.Dispose();
             }
 
         }
