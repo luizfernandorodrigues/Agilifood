@@ -25,15 +25,9 @@ namespace AgiliFood.Models.ModeloVisao
         [MaxLength(100, ErrorMessage = "Nome só pode conter 100 caracteres")]
         public string Descricao { get; set; }
 
-        [Display(Name = "Tipo Produto")]
-        [Required(ErrorMessage = "Tipo é Obrigatória!")]
-        public int Tipo { get; set; }
-
-        [Display(Name = "Imagem")]
-        public byte[] Imagem { get; set; }
-
         [Display(Name = "Preço")]
         [Required(ErrorMessage = "Preço é Obrigatória!")]
+        [DataType(DataType.Currency)]
         public decimal Preco { get; set; }
         public virtual IEnumerable<ItensCardapioViewModel> ItensCardapio { get; set; }
     }

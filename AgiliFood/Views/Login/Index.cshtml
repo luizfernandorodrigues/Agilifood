@@ -1,22 +1,25 @@
-﻿@model IEnumerable<AgiliFood.Models.ModeloVisao.ProdutoViewModel>
+﻿@model IEnumerable<AgiliFood.Models.ModeloVisao.UsuarioViewModel>
 
 @{
     ViewBag.Title = "Index";
 }
 
 <p>
-    @Html.ActionLink("Adicionar Novo", "Create")
+    @Html.ActionLink("Adicionar Novo Usuário", "Register")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Codigo)
+            @Html.DisplayNameFor(model => model.Nome)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Descricao)
+            @Html.DisplayNameFor(model => model.Login)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Preco)
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Adm)
         </th>
         <th></th>
     </tr>
@@ -25,13 +28,16 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Codigo)
+                @Html.DisplayFor(modelItem => item.Nome)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Descricao)
+                @Html.DisplayFor(modelItem => item.Login)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Preco)
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Adm)
             </td>
             <td>
                 @Html.ActionLink("Alterar", "Edit", new { id = item.Id }) |

@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - AgiliFood</title>
@@ -21,17 +21,57 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Início", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Pedido", "Index", "PedidoViewModels")</li>
-                    <li>@Html.ActionLink("Registra Usuário", "Register", "Login")</li>
-                    <li class="divider"></li>
-                    <li>@Html.ActionLink("Cadastro Cep", "Index", "CepViewModels")</li>
-                    <li>@Html.ActionLink("Cadastro Pais", "Index", "PaisViewModels")</li>
-                    <li>@Html.ActionLink("Cadastro Estado", "Index", "EstadoViewModels")</li>
-                    <li>@Html.ActionLink("Cadastro Cidade", "Index", "CidadeViewModels")</li>
-                    <li class="divider"></li>
-                    <li>@Html.ActionLink("Sobre", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contato", "Contact", "Home")</li>
+                    <!--Menu do Pedido-->
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Fazer Pedido
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Início", "Index", "Home")</li>
+                            <li>@Html.ActionLink("Pedido", "Index", "PedidoViewModels")</li>
+                        </ul>
+                    </li>
+                    <!--Menu do Adm-->
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Cadastros
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Cadastro de Produtos", "Index", "ProdutoViewModels")</li>
+                            <li>@Html.ActionLink("Cadastro de Cardapio", "Index", "CardapioViewModels")</li>
+                            <li class="divider"></li>
+                            <li>@Html.ActionLink("Cadastro Pais", "Index", "PaisViewModels")</li>
+                            <li>@Html.ActionLink("Cadastro Estado", "Index", "EstadoViewModels")</li>
+                            <li>@Html.ActionLink("Cadastro Cidade", "Index", "CidadeViewModels")</li>
+                            <li>@Html.ActionLink("Cadastro Cep", "Index", "CepViewModels")</li>
+                            <li class="divider"></li>
+                            <li>@Html.ActionLink("Registra Usuário", "Register", "Login")</li>
+                        </ul>
+                    </li>
+                    <!--Financeiro-->
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Financeiro
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Contas a Receber", "Index", "ContasReceberViewModels")</li>
+                        </ul>
+                    </li>
+                    <!--Menu da aplication-->
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Sobre o APP
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Sobre", "About", "Home")</li>
+                            <li>@Html.ActionLink("Contato", "Contact", "Home")</li>
+                        </ul>
+                    </li>
+
                 </ul>
             </div>
         </div>

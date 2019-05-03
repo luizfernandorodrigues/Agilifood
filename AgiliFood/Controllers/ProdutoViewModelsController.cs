@@ -2,6 +2,7 @@
 using AgiliFood.Models.ModeloVisao;
 using AutoMapper;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Web.Mvc;
 
@@ -31,7 +32,8 @@ namespace AgiliFood.Controllers
         {
             try
             {
-                return View(uow.ProdutoRepositorio.GetTudo());
+                IEnumerable<ProdutoViewModel> lista = Mapper.Map<IEnumerable<ProdutoViewModel>>(uow.ProdutoRepositorio.GetTudo());
+                return View(lista);
             }
             catch (Exception ex)
             {
@@ -82,7 +84,7 @@ namespace AgiliFood.Controllers
         // POST: ProdutoViewModels/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Codigo,Descricao,Tipo,Imagem,Preco")] ProdutoViewModel produtoViewModel)
+        public ActionResult Create([Bind(Include = "Id,Codigo,Descricao,Preco")] ProdutoViewModel produtoViewModel)
         {
             if (ModelState.IsValid)
             {
@@ -141,7 +143,7 @@ namespace AgiliFood.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Codigo,Descricao,Tipo,Imagem,Preco")] ProdutoViewModel produtoViewModel)
+        public ActionResult Edit([Bind(Include = "Id,Codigo,Descricao,Preco")] ProdutoViewModel produtoViewModel)
         {
             if (ModelState.IsValid)
             {

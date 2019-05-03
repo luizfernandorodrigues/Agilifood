@@ -1,14 +1,11 @@
 ﻿@model AgiliFood.Models.ModeloVisao.UsuarioViewModel
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Detalhes";
 }
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>UsuarioViewModel</h4>
+    <h4>Detalhes do Usuário</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -50,39 +47,9 @@
         <dd>
             @Html.DisplayFor(model => model.Adm)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Cadastro)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Cadastro)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Id_Funcionario)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Id_Funcionario)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.NomeFuncionario)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NomeFuncionario)
-        </dd>
-
     </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
-    }
 </div>
+<p>
+    @Html.ActionLink("Alterar", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Retornar Para Lista de Usuário", "Index")
+</p>

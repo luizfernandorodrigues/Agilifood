@@ -5,12 +5,14 @@ using System.Web.Mvc;
 using System;
 using AgiliFood.Utilitarios;
 using System.Web.Security;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 
 namespace AgiliFood.Controllers
 {
     public class LoginController : Controller
     {
-
         // GET: Login
         [HttpGet]
         public ActionResult Login(string returnUrl)
@@ -93,6 +95,185 @@ namespace AgiliFood.Controllers
                 }
             }
             return View(usuarioViewModel);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Administrador")]
+        public ActionResult Index()
+        {
+            using (UnitOfWork.UnitOfWork uow = new UnitOfWork.UnitOfWork())
+            {
+                try
+                {
+                    IEnumerable<UsuarioViewModel> lista = Mapper.Map<IEnumerable<UsuarioViewModel>>(uow.UsuarioRepositorio.GetTudo().ToList());
+                    return View(lista);
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", string.Format("Ocorreu um Erro na Busca dos Estados:\n {0}", ex.Message));
+                    return View();
+                }
+                finally
+                {
+                    uow.Dispose();
+                }
+            }
+        }
+
+        public ActionResult Details(Guid? id)
+        {
+            UsuarioViewModel usuarioViewModel = null;
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            using (UnitOfWork.UnitOfWork uow = new UnitOfWork.UnitOfWork())
+            {
+                try
+                {
+                    usuarioViewModel = Mapper.Map<UsuarioViewModel>(uow.UsuarioRepositorio.Get(x => x.Id == id));
+                    return View(usuarioViewModel);
+                }
+                catch (Exception ex)
+                {
+                    if (usuarioViewModel == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    ModelState.AddModelError("", string.Format("Ocorreu um Erro na Busca do Usuario com Id = {0}\n Erro: {1}", id, ex.Message));
+                    return View(usuarioViewModel);
+                }
+                finally
+                {
+                    uow.Dispose();
+                }
+            }
+
+        }
+
+        // GET: PaisViewModels/Edit/5
+        public ActionResult Edit(Guid? id)
+        {
+            UsuarioViewModel usuarioViewModel = null;
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            using (UnitOfWork.UnitOfWork uow = new UnitOfWork.UnitOfWork())
+            {
+                try
+                {
+                    usuarioViewModel = Mapper.Map<UsuarioViewModel>(uow.UsuarioRepositorio.Get(x => x.Id == id));
+                    return View(usuarioViewModel);
+
+                }
+                catch (Exception ex)
+                {
+                    if (usuarioViewModel == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    ModelState.AddModelError("", string.Format("Ocorreu um Erro {0}", ex.Message));
+                    return View();
+                }
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador")]
+        public ActionResult Edit([Bind(Include = "Id,Nome,Login,Email,Senha,Adm,")] UsuarioViewModel usuarioViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                using (UnitOfWork.UnitOfWork uow = new UnitOfWork.UnitOfWork())
+                {
+                    try
+                    {
+                        Usuario usuario = new Usuario();
+                        usuario = Mapper.Map<Usuario>(usuarioViewModel);
+                        usuario.Senha = Criptografia.Encrypt(usuario.Senha);
+                        uow.UsuarioRepositorio.Atualizar(usuario);
+                        uow.Commit();
+                        TempData["mensagem"] = string.Format("Registro Alterado Com Sucesso!");
+                        return RedirectToAction("Index");
+                    }
+                    catch (Exception ex)
+                    {
+                        TempData["mensagem"] = string.Format("Ocorreu ao Alterar o Registro!\n {0}", ex.Message);
+                        return RedirectToAction("Index");
+                    }
+                    finally
+                    {
+                        uow.Dispose();
+
+                    }
+                }
+            }
+            return View(usuarioViewModel);
+        }
+
+        // GET: UsuarioViewModels/Delete/5
+        [Authorize(Roles = "Administrador")]
+        public ActionResult Delete(Guid? id)
+        {
+            UsuarioViewModel usuarioViewModel = null;
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            using (UnitOfWork.UnitOfWork uow = new UnitOfWork.UnitOfWork())
+            {
+                try
+                {
+                    usuarioViewModel = Mapper.Map<UsuarioViewModel>(uow.UsuarioRepositorio.Get(x => x.Id == id));
+                    return View(usuarioViewModel);
+                }
+                catch (Exception ex)
+                {
+                    TempData["mensagem"] = string.Format("Ocorreu um erro!\n {0}", ex.Message);
+                    if (usuarioViewModel == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(usuarioViewModel);
+                }
+                finally
+                {
+                    uow.Dispose();
+                }
+            }
+        }
+
+        // POST: UsuarioViewModels/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador")]
+        public ActionResult DeleteConfirmed(Guid id)
+        {
+            using (UnitOfWork.UnitOfWork uow = new UnitOfWork.UnitOfWork())
+            {
+                try
+                {
+                    Usuario usuario = new Usuario();
+                    usuario = uow.UsuarioRepositorio.Get(x => x.Id == id);
+                    uow.UsuarioRepositorio.Deletar(usuario);
+                    uow.Commit();
+                    TempData["mensagem"] = string.Format("Registro Excluido com sucesso");
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    TempData["mensagem"] = string.Format("Ocorreu um Erro ao excluir o registro!\n {0}", ex.Message);
+                    return RedirectToAction("Index");
+                }
+                finally
+                {
+                    uow.Dispose();
+                }
+            }
         }
     }
 }
