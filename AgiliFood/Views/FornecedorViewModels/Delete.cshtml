@@ -1,12 +1,10 @@
 ﻿@model AgiliFood.Models.ModeloVisao.FornecedorViewModel
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Excluir";
 }
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
+<h3>Tem Certeza que Deseja Excluir Esse Registro?</h3>
 <div>
     <h4>FornecedorViewModel</h4>
     <hr />
@@ -88,25 +86,17 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Id_Cep)
+            @Html.DisplayFor(model => model.Cep._Cep)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Cep)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Cep)
-        </dd>
-
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Excluir" class="btn btn-danger" /> |
+            @Html.ActionLink("Retornar Para Lista de Fornecedores", "Index")
         </div>
     }
 </div>

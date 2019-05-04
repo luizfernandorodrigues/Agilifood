@@ -16,6 +16,6 @@ namespace AgiliFood.Models
         public DateTime Cadastro { get; set; }
         public DateTime TimesTamp { get; set; }
         public Guid Id_Cep { get; set; }
-        public Cep Cep { get; set; }
+        public virtual Cep Cep { get; set; }
     }
 }

@@ -40,6 +40,7 @@ namespace AgiliFood.Models.ModeloVisao
 
         [Display(Name = "Telefone")]
         [MaxLength(11, ErrorMessage = "Telefone só pode conter 11 caracteres")]
+        [DataType(DataType.PhoneNumber)]
         public string Fone { get; set; }
 
         [Display(Name = "Cnpj")]
@@ -48,15 +49,19 @@ namespace AgiliFood.Models.ModeloVisao
         public string Cnpj { get; set; }
 
         [Display(Name = "E-mail")]
+        [DataType(DataType.EmailAddress)]
         [MaxLength(80, ErrorMessage = "E-mail só pode conter 80 caracteres")]
         public string Email { get; set; }
 
         [Display(Name = "Data de Cadastro")]
         [Required(ErrorMessage = "Data de Cadastro é Obrigatório!")]
+        [DataType(DataType.Date)]
         public DateTime Cadastro { get; set; }
 
         [Required(ErrorMessage = "Cep é Obrigatório!")]
+        [Display(Name = "Cep")]
         public Guid Id_Cep { get; set; }
+
         public virtual CepViewModel Cep { get; set; }
         public virtual IEnumerable<CardapioViewModel> Cardapio { get; set; }
 

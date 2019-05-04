@@ -24,6 +24,7 @@ namespace AgiliFood.Models.ModeloVisao
 
         [Display(Name = "Data de Cadastro")]
         [Required(ErrorMessage = "A data de cadastro é obrigatória")]
+        [DataType(DataType.Date)]
         public DateTime Cadastro { get; set; }
 
         [Required(ErrorMessage = "Fornecedor é Obrigatório!")]

@@ -27,11 +27,13 @@ namespace AgiliFood.Controllers
 
         #region Metodos Publicos Actions
         // GET: ItensCardapioViewModels
-        public ActionResult Index()
+        public ActionResult Index(Guid idPedido)
         {
             try
             {
-                return View(uow.ItensCardapioRepositorio.GetTudo());
+                var lista = uow.ItensCardapioRepositorio.Get(x=>x.Cardapio.Id == idPedido);
+                ViewBag.Pedido = idPedido;
+                return PartialView(lista);
             }
             catch (Exception ex)
             {

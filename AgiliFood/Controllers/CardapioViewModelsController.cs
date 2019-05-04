@@ -3,11 +3,13 @@ using AgiliFood.Models.ModeloVisao;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 
 namespace AgiliFood.Controllers
 {
+    [Authorize(Roles = "Administrador")]
     public class CardapioViewModelsController : Controller
     {
         #region Propriedades
@@ -79,7 +81,17 @@ namespace AgiliFood.Controllers
         // GET: CardapioViewModels/Create
         public ActionResult Create()
         {
-            return View();
+            try
+            {
+                IEnumerable<FornecedorViewModel> lista = Mapper.Map<IEnumerable<FornecedorViewModel>>(uow.FornecedorRepositorio.GetTudo().ToList());
+                ViewBag.FornecedorLista = lista;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                TempData["mensagem"] = string.Format("Ocorreu um Erro Na busca De Cidades\n {0}", ex.Message);
+                return View();
+            }
         }
 
         // POST: CardapioViewModels/Create
@@ -87,19 +99,20 @@ namespace AgiliFood.Controllers
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Codigo,Descricao,Cadastro,Id_Fornecedor,NomeFornecedor")] CardapioViewModel cardapioViewModel)
+        public ActionResult Create(CardapioViewModel cardapioViewModel)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    cardapioViewModel.Id = Guid.NewGuid();
                     Cardapio cardapio = new Cardapio();
                     cardapio = Mapper.Map<Cardapio>(cardapioViewModel);
+                    cardapio.Id = Guid.NewGuid();
+                    cardapio.TimesTamp = DateTime.Now;
                     uow.CardapiorRepositorio.Adcionar(cardapio);
                     uow.Commit();
                     TempData["mensagem"] = string.Format("Registro Cadastrado com Sucesso!");
-                    return RedirectToAction("Index");
+                    return Json(new { Resultado = cardapio.Id }, JsonRequestBehavior.AllowGet);
                 }
                 catch (Exception ex)
                 {

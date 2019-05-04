@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace AgiliFood.Controllers
 {
+    [Authorize(Roles = "Administrador")]
     public class ProdutoViewModelsController : Controller
     {
         #region Propriedades
@@ -91,8 +92,9 @@ namespace AgiliFood.Controllers
                 try
                 {
                     Produto produto = new Produto();
-                    produtoViewModel.Id = Guid.NewGuid();
                     produto = Mapper.Map<Produto>(produtoViewModel);
+                    produto.Id = Guid.NewGuid();
+                    produto.TimesTamp = DateTime.Now;
                     uow.ProdutoRepositorio.Adcionar(produto);
                     uow.Commit();
                     TempData["mensagem"] = string.Format("Registro Cadastrado com Sucesso!");
@@ -100,7 +102,7 @@ namespace AgiliFood.Controllers
                 }
                 catch (Exception ex)
                 {
-                    TempData["mensagem"] = string.Format("Não Foi Possivel Gravar o Registro!\n {0}", ex.Message);
+                    TempData["mensagem"] = string.Format("Não Foi Possivel Gravar o Registro!\n {0}", ex.InnerException);
                     return View();
                 }
                 finally
@@ -151,6 +153,7 @@ namespace AgiliFood.Controllers
                 {
                     Produto produto = new Produto();
                     produto = Mapper.Map<Produto>(produtoViewModel);
+                    produto.TimesTamp = DateTime.Now;
                     uow.ProdutoRepositorio.Atualizar(produto);
                     uow.Commit();
                     TempData["mensagem"] = string.Format("Registro Alterado Com Sucesso!");
@@ -222,6 +225,6 @@ namespace AgiliFood.Controllers
                 uow.Dispose();
             }
         }
-#endregion
+        #endregion
     }
 }
