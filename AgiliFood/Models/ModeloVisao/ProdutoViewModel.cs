@@ -29,6 +29,7 @@ namespace AgiliFood.Models.ModeloVisao
         [Required(ErrorMessage = "Preço é Obrigatória!")]
         [DataType(DataType.Currency)]
         public decimal Preco { get; set; }
+
         public virtual IEnumerable<ItensCardapioViewModel> ItensCardapio { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace AgiliFood.Models
 {
@@ -9,5 +10,7 @@ namespace AgiliFood.Models
         public string Descricao { get; set; }
         public DateTime TimesTamp { get; set; }
         public decimal Preco { get; set; }
+
+        public virtual IEnumerable<ItensCardapio> ItensCardapio { get; set; }
     }
 }

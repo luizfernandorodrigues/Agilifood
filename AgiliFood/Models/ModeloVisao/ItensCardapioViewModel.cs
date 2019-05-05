@@ -14,9 +14,9 @@ namespace AgiliFood.Models.ModeloVisao
     {
         public Guid Id { get; set; }
 
-        [Display(Name = "Valor")]
-        [Required(ErrorMessage = "Valor é Obrigatória!")]
-        public decimal Valor { get; set; }
+        [Required(ErrorMessage = "Quantidade é Obrigatório")]
+        [Display(Name = "Quantidade")]
+        public int Quantidade { get; set; }
 
         [Required(ErrorMessage = "Produto é Obrigatória!")]
         [Display(Name = "Produto")]

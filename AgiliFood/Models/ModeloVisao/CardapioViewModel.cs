@@ -33,7 +33,7 @@ namespace AgiliFood.Models.ModeloVisao
         public virtual FornecedorViewModel Fornecedor { get; set; }
 
         public virtual IEnumerable<ItensCardapioViewModel> ItensCardapio { get; set; }
-        public virtual IEnumerable<PedidoViewModel> Pedidos { get; set; }
+        public virtual IEnumerable<PedidoViewModel> Pedido { get; set; }
 
     }
 }

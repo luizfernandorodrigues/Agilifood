@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace AgiliFood.Models
 {
@@ -15,7 +16,10 @@ namespace AgiliFood.Models
         public string Email { get; set; }
         public DateTime Cadastro { get; set; }
         public DateTime TimesTamp { get; set; }
+
         public Guid Id_Cep { get; set; }
         public virtual Cep Cep { get; set; }
+
+        public virtual IEnumerable<Cardapio> Cardapio { get; set; }
     }
 }

@@ -1,0 +1,66 @@
+﻿@model IEnumerable<AgiliFood.Models.ModeloVisao.ItensCardapioViewModel>
+
+
+<div class="form-horizontal">
+    <h4>Itens do Cardapio</h4>
+    <hr />
+
+    @{
+        <div class="form-group">
+            @{
+                AgiliFood.Models.ItensCardapio itensCardapio = new AgiliFood.Models.ItensCardapio();
+                @Html.Label("Selecione um Produto", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("Id_Produto", new SelectList(ViewBag.ProdutoLista, "id", "descricao"))
+                    @Html.ValidationMessageFor(x => itensCardapio.Id_Produto)
+                </div>
+            }
+        </div>
+    }
+    <div class="form-group">
+        <label class="control-label col-md-2">Quantidade</label>
+        <div class="col-md-10">
+            <input type="number" id="Quantidade" name="Quantidade" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <a href="#" onclick="SalvarItens();">Gravar Itens</a>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="idPedido" value="@ViewBag.Pedido" />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id_Produto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Id_Cardapio)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Produto.Descricao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cardapio.Descricao)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

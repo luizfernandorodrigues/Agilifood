@@ -16,13 +16,7 @@
             @Html.DisplayNameFor(model => model.Total)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Id_Funcionario)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NomeFuncionario)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Id_Cardapio)
+            @Html.DisplayNameFor(model => model.Usuario.Nome)
         </th>
         <th></th>
     </tr>
@@ -37,13 +31,7 @@
                 @Html.DisplayFor(modelItem => item.Total)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Id_Funcionario)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NomeFuncionario)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id_Cardapio)
+                @Html.DisplayFor(modelItem => item.Usuario.Nome)
             </td>
             <td>
                 @Html.ActionLink("Alterar", "Edit", new { id = item.Id }) |

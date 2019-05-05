@@ -22,8 +22,8 @@ namespace AgiliFood.Models.Maps
             HasKey(x => x.Id);
             Property(x => x.Id).HasColumnName("id").HasColumnType("uniqueidentifier");
 
-            Property(x => x.TimesTamp).HasColumnName("timestamp").IsRequired();
-            Property(x => x.Valor).HasColumnName("valor").HasColumnType("numeric").HasPrecision(18,2).IsRequired();
+            Property(x=>x.Quantidade).HasColumnName("quantidade").HasColumnType("int").IsRequired();
+
             //fk do cardapio
             Property(x => x.Id_Cardapio).HasColumnName("id_cardapio").HasColumnType("uniqueidentifier").IsRequired();
             HasRequired(x => x.Cardapio).WithMany().HasForeignKey(x => x.Id_Cardapio).WillCascadeOnDelete(false);

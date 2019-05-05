@@ -152,10 +152,8 @@
     <Compile Include="Controllers\ContasReceberViewModelsController.cs" />
     <Compile Include="Controllers\EstadoViewModelsController.cs" />
     <Compile Include="Controllers\FornecedorViewModelsController.cs" />
-    <Compile Include="Controllers\FuncionarioViewModelsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItensCardapioViewModelsController.cs" />
-    <Compile Include="Controllers\ItensPedidoViewModelsController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PaisViewModelsController.cs" />
     <Compile Include="Controllers\PedidoViewModelsController.cs" />
@@ -210,6 +208,26 @@
     <Compile Include="Migrations\201905030047136_modificação.Designer.cs">
       <DependentUpon>201905030047136_modificação.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905041822574_refatoracao.cs" />
+    <Compile Include="Migrations\201905041822574_refatoracao.Designer.cs">
+      <DependentUpon>201905041822574_refatoracao.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905042039159_teste2.cs" />
+    <Compile Include="Migrations\201905042039159_teste2.Designer.cs">
+      <DependentUpon>201905042039159_teste2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905050110216_modificação_itens_cardapio.cs" />
+    <Compile Include="Migrations\201905050110216_modificação_itens_cardapio.Designer.cs">
+      <DependentUpon>201905050110216_modificação_itens_cardapio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905050248598_remocao.cs" />
+    <Compile Include="Migrations\201905050248598_remocao.Designer.cs">
+      <DependentUpon>201905050248598_remocao.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905050306332_remocao_funcionario.cs" />
+    <Compile Include="Migrations\201905050306332_remocao_funcionario.Designer.cs">
+      <DependentUpon>201905050306332_remocao_funcionario.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Dominio\Cardapio.cs" />
     <Compile Include="Models\Dominio\Cep.cs" />
@@ -218,9 +236,7 @@
     <Compile Include="Models\Dominio\Contexto.cs" />
     <Compile Include="Models\Dominio\Estado.cs" />
     <Compile Include="Models\Dominio\Fornecedor.cs" />
-    <Compile Include="Models\Dominio\Funcionario.cs" />
     <Compile Include="Models\Dominio\ItensCardapio.cs" />
-    <Compile Include="Models\Dominio\ItensPedido.cs" />
     <Compile Include="Models\Dominio\Pais.cs" />
     <Compile Include="Models\Dominio\Pedido.cs" />
     <Compile Include="Models\Dominio\Produto.cs" />
@@ -231,8 +247,6 @@
     <Compile Include="Models\Maps\ContasReceberMap.cs" />
     <Compile Include="Models\Maps\EstadoMap.cs" />
     <Compile Include="Models\Maps\FornecedorMap.cs" />
-    <Compile Include="Models\Maps\FuncionarioMap.cs" />
-    <Compile Include="Models\Maps\ItensPedidoMap.cs" />
     <Compile Include="Models\Maps\ItensCardapioMap.cs" />
     <Compile Include="Models\Maps\PaisMap.cs" />
     <Compile Include="Models\Maps\PedidoMap.cs" />
@@ -244,9 +258,7 @@
     <Compile Include="Models\ModeloVisao\ContasReceberViewModel.cs" />
     <Compile Include="Models\ModeloVisao\EstadoViewModel.cs" />
     <Compile Include="Models\ModeloVisao\FornecedorViewModel.cs" />
-    <Compile Include="Models\ModeloVisao\FuncionarioViewModel.cs" />
     <Compile Include="Models\ModeloVisao\ItensCardapioViewModel.cs" />
-    <Compile Include="Models\ModeloVisao\ItensPedidoViewModel.cs" />
     <Compile Include="Models\ModeloVisao\LoginViewModel.cs" />
     <Compile Include="Models\ModeloVisao\PaisViewModel.cs" />
     <Compile Include="Models\ModeloVisao\PedidoViewModel.cs" />
@@ -347,17 +359,11 @@
     <Content Include="Views\ItensCardapioViewModels\Delete.cshtml" />
     <Content Include="Views\ItensCardapioViewModels\Details.cshtml" />
     <Content Include="Views\ItensCardapioViewModels\Edit.cshtml" />
-    <Content Include="Views\ItensCardapioViewModels\Index.cshtml" />
     <Content Include="Views\PedidoViewModels\Create.cshtml" />
     <Content Include="Views\PedidoViewModels\Delete.cshtml" />
     <Content Include="Views\PedidoViewModels\Details.cshtml" />
     <Content Include="Views\PedidoViewModels\Edit.cshtml" />
     <Content Include="Views\PedidoViewModels\Index.cshtml" />
-    <Content Include="Views\ItensPedidoViewModels\Create.cshtml" />
-    <Content Include="Views\ItensPedidoViewModels\Delete.cshtml" />
-    <Content Include="Views\ItensPedidoViewModels\Details.cshtml" />
-    <Content Include="Views\ItensPedidoViewModels\Edit.cshtml" />
-    <Content Include="Views\ItensPedidoViewModels\Index.cshtml" />
     <Content Include="Views\ContasReceberViewModels\Create.cshtml" />
     <Content Include="Views\ContasReceberViewModels\Delete.cshtml" />
     <Content Include="Views\ContasReceberViewModels\Details.cshtml" />
@@ -365,6 +371,7 @@
     <Content Include="Views\ContasReceberViewModels\Index.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Home\Menu.cshtml" />
+    <Content Include="Views\ItensCardapioViewModels\ListarItens.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -415,6 +422,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905030047136_modificação.resx">
       <DependentUpon>201905030047136_modificação.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905041822574_refatoracao.resx">
+      <DependentUpon>201905041822574_refatoracao.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905042039159_teste2.resx">
+      <DependentUpon>201905042039159_teste2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905050110216_modificação_itens_cardapio.resx">
+      <DependentUpon>201905050110216_modificação_itens_cardapio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905050248598_remocao.resx">
+      <DependentUpon>201905050248598_remocao.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905050306332_remocao_funcionario.resx">
+      <DependentUpon>201905050306332_remocao_funcionario.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

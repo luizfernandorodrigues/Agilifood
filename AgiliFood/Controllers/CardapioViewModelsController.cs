@@ -12,6 +12,8 @@ namespace AgiliFood.Controllers
     [Authorize(Roles = "Administrador")]
     public class CardapioViewModelsController : Controller
     {
+        public static Guid idPedido;
+
         #region Propriedades
         private readonly UnitOfWork.UnitOfWork uow;
         #endregion
@@ -112,7 +114,8 @@ namespace AgiliFood.Controllers
                     uow.CardapiorRepositorio.Adcionar(cardapio);
                     uow.Commit();
                     TempData["mensagem"] = string.Format("Registro Cadastrado com Sucesso!");
-                    return Json(new { Resultado = cardapio.Id }, JsonRequestBehavior.AllowGet);
+                    idPedido = cardapio.Id;
+                    return Json(new { Resultado = cardapio.Id.ToString() }, JsonRequestBehavior.AllowGet);
                 }
                 catch (Exception ex)
                 {

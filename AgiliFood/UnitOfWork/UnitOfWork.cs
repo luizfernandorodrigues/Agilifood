@@ -20,9 +20,7 @@ namespace AgiliFood.UnitOfWork
         private Repositorio<ContasReceber> contasReceberRepositorio = null;
         private Repositorio<Estado> estadoRepositorio = null;
         private Repositorio<Fornecedor> fornecedorRepositorio = null;
-        private Repositorio<Funcionario> funcionarioRepositorio = null;
         private Repositorio<ItensCardapio> itensCardapioRepositorio = null;
-        private Repositorio<ItensPedido> itensPedidoRepositorio = null;
         private Repositorio<Pais> paisRepositorio = null;
         private Repositorio<Pedido> pedidoRepositorio = null;
         private Repositorio<Produto> produtoRepositorio = null;
@@ -109,17 +107,6 @@ namespace AgiliFood.UnitOfWork
             }
         }
 
-        public IRepositorio<Funcionario> FuncionarioRepositorio
-        {
-            get
-            {
-                if (funcionarioRepositorio == null)
-                {
-                    funcionarioRepositorio = new Repositorio<Funcionario>(_contexto);
-                }
-                return funcionarioRepositorio;
-            }
-        }
 
         public IRepositorio<ItensCardapio> ItensCardapioRepositorio
         {
@@ -133,17 +120,6 @@ namespace AgiliFood.UnitOfWork
             }
         }
 
-        public IRepositorio<ItensPedido> ItensPedidoRepositorio
-        {
-            get
-            {
-                if (itensPedidoRepositorio == null)
-                {
-                    itensPedidoRepositorio = new Repositorio<ItensPedido>(_contexto);
-                }
-                return itensPedidoRepositorio;
-            }
-        }
 
         public IRepositorio<Pais> PaisRepositorio
         {

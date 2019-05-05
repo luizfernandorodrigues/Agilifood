@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace AgiliFood.Models
 {
@@ -12,8 +10,12 @@ namespace AgiliFood.Models
         public string Descricao { get; set; }
         public DateTime Cadastro { get; set; }
         public DateTime TimesTamp { get; set; }
+
         public Guid Id_Fornecedor { get; set; }
         public virtual Fornecedor Fornecedor { get; set; }
+
+        public virtual IEnumerable<ItensCardapio> ItensCardapio { get; set; }
+        public virtual IEnumerable<Pedido> Pedido { get; set; }
 
     }
 }

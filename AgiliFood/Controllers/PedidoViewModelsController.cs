@@ -3,11 +3,14 @@ using AgiliFood.Models.ModeloVisao;
 using AgiliFood.Negocio;
 using AutoMapper;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Web.Mvc;
+using System.Linq;
 
 namespace AgiliFood.Controllers
 {
+    [Authorize]
     public class PedidoViewModelsController : Controller
     {
         #region Propriedades
@@ -33,7 +36,9 @@ namespace AgiliFood.Controllers
         {
             try
             {
-                return View(uow.PedidoRepositorio.GetTudo());
+                Guid id_funcionario = Guid.Parse(Session["id_usuario"].ToString());
+                IEnumerable<PedidoViewModel> pedidoViewModel = Mapper.Map<IEnumerable<PedidoViewModel>>(uow.PedidoRepositorio.GetTudo(x => x.Id_Usuario == id_funcionario));
+                return View(pedidoViewModel);
             }
             catch (Exception ex)
             {
@@ -70,7 +75,37 @@ namespace AgiliFood.Controllers
         // GET: PedidoViewModels/Create
         public ActionResult Create()
         {
-            return View();
+            using (UnitOfWork.UnitOfWork uow = new UnitOfWork.UnitOfWork())
+            {
+                try
+                {
+                    IEnumerable<CardapioViewModel> lista = Mapper.Map<IEnumerable<CardapioViewModel>>(uow.CardapiorRepositorio.GetTudo());
+                    List<CardapioViewModel> valorFormatado = new List<CardapioViewModel>();
+                    foreach (var item in lista)
+                    {
+                        var descricaoItens = uow.ItensCardapioRepositorio.GetTudo(x => x.Id_Cardapio == item.Id);
+                        string aux = "";
+                        foreach (var nome in descricaoItens)
+                        {
+                            aux += nome.Produto.Descricao + " | ";
+                        }
+                        var valor = uow.ItensCardapioRepositorio.GetTudo(x => x.Id_Cardapio == item.Id).Sum(x => x.Produto.Preco);
+                        item.Descricao = item.Descricao.Trim() + " | " + aux + "R$ " + valor;
+                        valorFormatado.Add(item);
+                    }
+                    ViewBag.CardapioLista = valorFormatado;
+                    return View();
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", string.Format("Ocorreu um Erro na Busca dos Cardapios:\n {0}", ex.Message));
+                    return View();
+                }
+                finally
+                {
+                    uow.Dispose();
+                }
+            }
         }
 
         // POST: PedidoViewModels/Create
@@ -78,15 +113,21 @@ namespace AgiliFood.Controllers
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Emissao,Total,Id_Funcionario,NomeFuncionario,Id_Cardapio,DescricaoCardapio")] PedidoViewModel pedidoViewModel)
+        public ActionResult Create([Bind(Include = "Id,Emissao,Total,Id_Funcionario,Id_Cardapio")] PedidoViewModel pedidoViewModel)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
                     Pedido pedido = new Pedido();
-                    pedidoViewModel.Id = Guid.NewGuid();
                     pedido = Mapper.Map<Pedido>(pedidoViewModel);
+                    pedido.Id = Guid.NewGuid();
+                    //pego id do usuario logado pela session
+                    pedido.Id_Usuario = Guid.Parse(Session["id_usuario"].ToString());
+                    //pego total
+                    var total = uow.ItensCardapioRepositorio.GetTudo(x => x.Id_Cardapio == pedido.Id_Cardapio).Sum(x=>x.Produto.Preco);
+                    pedido.Total = total;
+                    
                     uow.PedidoRepositorio.Adcionar(pedido);
                     uow.Commit();
                     //gera financeiro

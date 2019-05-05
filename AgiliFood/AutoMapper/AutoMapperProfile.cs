@@ -40,14 +40,10 @@ namespace AgiliFood.AutoMapper
             CreateMap<FornecedorViewModel, Fornecedor>();
             CreateMap<Fornecedor, FornecedorViewModel>();
 
-            CreateMap<FuncionarioViewModel, Funcionario>();
-            CreateMap<Funcionario, FuncionarioViewModel>();
-
+         
             CreateMap<ItensCardapioViewModel, ItensCardapio>();
             CreateMap<ItensCardapio, ItensCardapioViewModel>();
 
-            CreateMap<ItensPedidoViewModel, ItensPedido>();
-            CreateMap<ItensPedido, ItensPedidoViewModel>();
 
             CreateMap<PedidoViewModel, Pedido>();
             CreateMap<Pedido, PedidoViewModel>();

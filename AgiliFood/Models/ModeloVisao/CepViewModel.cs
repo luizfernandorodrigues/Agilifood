@@ -22,7 +22,6 @@ namespace AgiliFood.Models.ModeloVisao
         [Display(Name = "Cidade")]
         public string Id_Cidade { get; set; }
         public virtual CidadeViewModel Cidade { get; set; }
-        public virtual IEnumerable<FuncionarioViewModel> Funcionario { get; set; }
         public virtual IEnumerable<FornecedorViewModel> Fornecedor { get; set; }
     }
 }

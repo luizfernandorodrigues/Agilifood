@@ -17,6 +17,7 @@ namespace AgiliFood.Models.ModeloVisao
 
         [Display(Name = "Emissão")]
         [Required(ErrorMessage = "Emissão é Obrigatória!")]
+        [DataType(DataType.Date)]
         public DateTime Emissao { get; set; }
 
         [Display(Name = "Total")]
@@ -24,13 +25,13 @@ namespace AgiliFood.Models.ModeloVisao
         public decimal Total { get; set; }
 
         [Required(ErrorMessage = "Funcionario é Obrigatória!")]
-        public Guid Id_Funcionario { get; set; }
-        public string NomeFuncionario { get; set; }
+        [Display(Name ="Funcionario")]
+        public Guid Id_Usuario { get; set; }
+        public virtual UsuarioViewModel Usuario { get; set; }
 
         [Required(ErrorMessage = "Cardapio é Obrigatória!")]
+        [Display(Name ="Cardapio")]
         public Guid Id_Cardapio { get; set; }
         public virtual CardapioViewModel Cardapio { get; set; }
-
-        public virtual IEnumerable<ItensPedidoViewModel> ItensPedido { get; set; }
     }
 }

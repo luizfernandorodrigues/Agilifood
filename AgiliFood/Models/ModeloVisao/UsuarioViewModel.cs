@@ -18,7 +18,7 @@ namespace AgiliFood.Models.ModeloVisao
     /// Autor:  Luiz Fernando
     /// Data:   25/04/2019
     /// </remarks>
-    
+
     public class UsuarioViewModel
     {
         public Guid Id { get; set; }
@@ -47,6 +47,9 @@ namespace AgiliFood.Models.ModeloVisao
         [Display(Name = "Administrador")]
         [Required(ErrorMessage = "Tipo é Obrigatória!")]
         public bool Adm { get; set; }
+
+        public virtual IEnumerable<PedidoViewModel> PedidoViewModel { get; set; }
+        public virtual IEnumerable<ContasReceberViewModel> ContasReceberViewModel { get; set; }
 
     }
 }

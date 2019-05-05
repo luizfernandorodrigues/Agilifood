@@ -10,9 +10,11 @@ namespace AgiliFood.Models
         public Guid Id { get; set; }
         public DateTime Emissao { get; set; }
         public decimal Total { get; set; }
-        public Guid Id_Funcionario { get; set; }
-        public Funcionario Funcionario { get; set; }
+
+        public Guid Id_Usuario { get; set; }
+        public virtual Usuario Usuario { get; set; }
+
         public Guid Id_Cardapio { get; set; }
-        public Cardapio Cardapio { get; set; }
+        public virtual Cardapio Cardapio { get; set; }
     }
 }

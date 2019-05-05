@@ -29,8 +29,8 @@ namespace AgiliFood.Models.Maps
             Property(x => x.Quitado).HasColumnName("quitado").HasColumnType("bit").IsRequired();
 
             //fk funcionario
-            Property(x => x.Id_Funcionario).HasColumnName("id_funcionario").HasColumnType("uniqueidentifier").IsRequired();
-            HasRequired(x => x.Funcionario).WithMany().HasForeignKey(x => x.Id_Funcionario).WillCascadeOnDelete(false);
+            Property(x => x.Id_Usuario).HasColumnName("id_usuario").HasColumnType("uniqueidentifier").IsRequired();
+            HasRequired(x => x.Usuario).WithMany().HasForeignKey(x => x.Id_Usuario).WillCascadeOnDelete(false);
 
             //fk pedido
             Property(x => x.Id_Pedido).HasColumnName("id_pedido").HasColumnType("uniqueidentifier").IsRequired();

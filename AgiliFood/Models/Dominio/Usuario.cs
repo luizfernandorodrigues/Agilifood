@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace AgiliFood.Models
 {
@@ -21,5 +22,8 @@ namespace AgiliFood.Models
         public string Email { get; set; }
         public string Senha { get; set; }
         public bool Adm { get; set; }
+
+        public virtual IEnumerable<Pedido> Pedido { get; set; }
+        public virtual IEnumerable<ContasReceber> ContasReceber { get; set; }
     }
 }

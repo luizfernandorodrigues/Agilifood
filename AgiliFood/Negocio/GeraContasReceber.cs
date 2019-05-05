@@ -25,13 +25,15 @@ namespace AgiliFood.Negocio
             {
                 using (UnitOfWork.UnitOfWork uow = new UnitOfWork.UnitOfWork())
                 {
+                    //recupero o id do fornecedor
+                    Guid idFornecedor = uow.CardapiorRepositorio.Get(x=>x.Id == pedido.Id_Cardapio).Id_Fornecedor;
                     ContasReceber contasReceber = new ContasReceber
                     {
                         Id = Guid.NewGuid(),
                         Emissao = DateTime.Now,
                         Id_Pedido = pedido.Id,
-                        Id_Fornecedor = pedido.Cardapio.Fornecedor.Id,
-                        Id_Funcionario = pedido.Id_Funcionario,
+                        Id_Fornecedor = idFornecedor,
+                        Id_Usuario = pedido.Id_Usuario,
                         Quitado = false,
                         ValorPago = 0,
                         Valor = pedido.Total

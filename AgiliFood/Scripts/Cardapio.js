@@ -25,7 +25,7 @@
         },
         success: function (data) {
             if (data.Resultado != null) {
-                debugger;
+              //  debugger;
                 ListarItens(data.Resultado);
             }
         }
@@ -34,17 +34,37 @@
 }
 
 function ListarItens(idPedido) {
-    var url = "/ItensCardapioViewModels/Index";
+    var url = "/ItensCardapioViewModels/ListarItens";
     $.ajax({
         url: url,
         type: "GET",
         data: { id: idPedido },
-        dataType: "json",
+        dataType: "html",
         success: function (data) {
             var divItens = $("#divItens");
             divItens.empty();
             divItens.show();
             divItens.html(data);
+        }
+    });
+}
+
+function SalvarItens() {
+    var quantidade = $("#Quantidade").val();
+    var id_produto = $("#Id_Produto").val();
+    var id_pedido = $("#idPedido").val();
+
+    var url = "/ItensCardapioViewModels/Create";
+
+    $.ajax({
+        url: url,
+        data: { Quantidade: quantidade, Id_Produto: id_produto, Id_Cardapio: id_pedido },
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+            if (data.Resultado != null) {
+                ListarItens(id_pedido);
+            }
         }
     });
 }

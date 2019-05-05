@@ -15,9 +15,7 @@ namespace AgiliFood.Interfaces
         IRepositorio<ContasReceber> ContasReceberRepositorio { get; }
         IRepositorio<Estado> EstadoRepositorio { get; }
         IRepositorio<Fornecedor> FornecedorRepositorio { get; }
-        IRepositorio<Funcionario> FuncionarioRepositorio { get; }
         IRepositorio<ItensCardapio> ItensCardapioRepositorio { get; }
-        IRepositorio<ItensPedido> ItensPedidoRepositorio { get; }
         IRepositorio<Pais> PaisRepositorio { get; }
         IRepositorio<Pedido> PedidoRepositorio { get; }
         IRepositorio<Produto> ProdutoRepositorio { get; }

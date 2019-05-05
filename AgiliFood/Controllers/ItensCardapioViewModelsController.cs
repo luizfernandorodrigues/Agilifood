@@ -2,6 +2,7 @@
 using AgiliFood.Models.ModeloVisao;
 using AutoMapper;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Web.Mvc;
 
@@ -27,12 +28,23 @@ namespace AgiliFood.Controllers
 
         #region Metodos Publicos Actions
         // GET: ItensCardapioViewModels
-        public ActionResult Index(Guid idPedido)
+        public ActionResult ListarItens(Guid? idPedido)
         {
+            if (idPedido == null)
+            {
+                idPedido = CardapioViewModelsController.idPedido;
+            }
             try
             {
-                var lista = uow.ItensCardapioRepositorio.Get(x=>x.Cardapio.Id == idPedido);
+                IEnumerable<ItensCardapioViewModel> lista =
+                                Mapper.Map<IEnumerable<ItensCardapioViewModel>>
+                    (uow.ItensCardapioRepositorio.GetTudo(x => x.Id_Cardapio == idPedido));
+
+                IEnumerable<ProdutoViewModel> listaProdutos =
+                    Mapper.Map<IEnumerable<ProdutoViewModel>>(uow.ProdutoRepositorio.GetTudo());
+                ViewBag.ProdutoLista = listaProdutos;
                 ViewBag.Pedido = idPedido;
+
                 return PartialView(lista);
             }
             catch (Exception ex)
@@ -75,42 +87,34 @@ namespace AgiliFood.Controllers
                 uow.Dispose();
             }
         }
-
-        // GET: ItensCardapioViewModels/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
         // POST: ItensCardapioViewModels/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Valor,Id_Produto,NomeProduto,Id_Cardapio,DescricaoCardapio")] ItensCardapioViewModel itensCardapioViewModel)
+        public ActionResult Create(Guid id_produto, Guid id_cardapio, int quantidade)
         {
-            if (ModelState.IsValid)
+            try
             {
-                try
+                ItensCardapio itensCardapio = new ItensCardapio()
                 {
-                    ItensCardapio itensCardapio = new ItensCardapio();
-                    itensCardapioViewModel.Id = Guid.NewGuid();
-                    itensCardapio = Mapper.Map<ItensCardapio>(itensCardapioViewModel);
-                    uow.ItensCardapioRepositorio.Adcionar(itensCardapio);
-                    uow.Commit();
-                    TempData["mensagem"] = string.Format("Registro Cadastrado com Sucesso!");
-                    return RedirectToAction("Index");
-                }
-                catch (Exception ex)
-                {
-                    TempData["mensagem"] = string.Format("Não Foi Possivel Gravar o Registro!\n {0}", ex.Message);
-                    return View();
-                }
-                finally
-                {
-                    uow.Dispose();
-                }
+                    Id = Guid.NewGuid(),
+                    Id_Produto = id_produto,
+                    Id_Cardapio = id_cardapio,
+                    Quantidade = quantidade
+                };
+                uow.ItensCardapioRepositorio.Adcionar(itensCardapio);
+                uow.Commit();
+                TempData["mensagem"] = string.Format("Registro Cadastrado com Sucesso!");
+                return Json(new { Resultado = itensCardapio.Id.ToString()}, JsonRequestBehavior.AllowGet);
             }
-            return View(itensCardapioViewModel);
+            catch (Exception ex)
+            {
+                TempData["mensagem"] = string.Format("Não Foi Possivel Gravar o Registro!\n {0}", ex.Message);
+                return View();
+            }
+            finally
+            {
+                uow.Dispose();
+            }
         }
+
 
         // GET: ItensCardapioViewModels/Edit/5
         public ActionResult Edit(Guid? id)
