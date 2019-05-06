@@ -364,10 +364,6 @@
     <Content Include="Views\PedidoViewModels\Details.cshtml" />
     <Content Include="Views\PedidoViewModels\Edit.cshtml" />
     <Content Include="Views\PedidoViewModels\Index.cshtml" />
-    <Content Include="Views\ContasReceberViewModels\Create.cshtml" />
-    <Content Include="Views\ContasReceberViewModels\Delete.cshtml" />
-    <Content Include="Views\ContasReceberViewModels\Details.cshtml" />
-    <Content Include="Views\ContasReceberViewModels\Edit.cshtml" />
     <Content Include="Views\ContasReceberViewModels\Index.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Home\Menu.cshtml" />

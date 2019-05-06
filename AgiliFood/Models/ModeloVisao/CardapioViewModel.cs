@@ -28,6 +28,7 @@ namespace AgiliFood.Models.ModeloVisao
         public DateTime Cadastro { get; set; }
 
         [Required(ErrorMessage = "Fornecedor é Obrigatório!")]
+        [Display(Name ="Fornecedor")]
         public Guid Id_Fornecedor { get; set; }
 
         public virtual FornecedorViewModel Fornecedor { get; set; }

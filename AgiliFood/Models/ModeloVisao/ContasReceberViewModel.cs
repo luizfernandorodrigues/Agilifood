@@ -20,8 +20,17 @@ namespace AgiliFood.Models.ModeloVisao
         [Required]
         public decimal Valor { get; set; }
         public decimal ValorPago { get; set; }
-        public string NomeFuncionario { get; set; }
-        public string NumeroPedido { get; set; }
-        public string NomeFornecedor { get; set; }
+
+        [Display(Name ="Funcionáio")]
+        public Guid Id_Usuario { get; set; }
+        public virtual UsuarioViewModel Usuario { get; set; }
+
+        [Display(Name ="Pedido")]
+        public Guid Id_Pedido { get; set; }
+        public virtual PedidoViewModel Pedido { get; set; }
+
+        [Display(Name ="Fornecedor")]
+        public Guid Id_Fornecedor { get; set; }
+        public virtual Fornecedor Fornecedor { get; set; }
     }
 }
